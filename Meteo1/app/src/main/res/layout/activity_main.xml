@@ -1,45 +1,242 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
+    android:orientation="horizontal"
     tools:context="com.example.bjj.meteo1.MainActivity"
-    android:weightSum="1">
+    android:background="@color/colorPrimaryDark"
+   >
+
+    <LinearLayout
+        android:layout_width="300dp"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="150dp">
+
+            <ImageView
+                android:layout_width="150dp"
+                android:layout_height="100dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/ciel" />
+
+            <TextView
+                android:id="@+id/tempExtView"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginBottom="20dp"
+                android:layout_marginLeft="0dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="20dp"
+                android:drawablePadding="5dp"
+                android:gravity="center"
+                android:text="TEMP EXT"
+                android:textColor="#FFFF"
+                android:textSize="30dp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/diversExtView"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="20dp"
+            android:background="#EFFF"
+            android:gravity="center"
+            android:text="divers info exterieur"
+            android:textColor="@color/colorAccent" />
+
+        />
+
+        <TextView
+            android:id="@+id/consohistoView"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="20dp"
+            android:background="#EFFF"
+            android:gravity="center"
+            android:text="consoHistoView de la journée"
+            android:textColor="@color/colorAccent" />
+
+        <TextView
+            android:id="@+id/lampeIntView"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="20dp"
+            android:background="#EFFF"
+            android:gravity="center"
+            android:text="Eclairage du salon"
+            android:textColor="@color/colorAccent"
+
+            />
+
+        <TextView
+            android:id="@+id/lampeExtView"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="20dp"
+            android:background="#EFFF"
+            android:gravity="center"
+            android:text="Eclairage extérieur"
+            android:textColor="@color/colorAccent"
+
+            />
+
+        <TextView
+            android:id="@+id/ChauffageView"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="20dp"
+            android:background="#EFFF"
+            android:gravity="center"
+            android:text="Chauffage"
+            android:textColor="@color/colorAccent"
+
+            />
+
+        <TextView
+            android:id="@+id/ScenarioView"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="20dp"
+            android:background="#EFFF"
+            android:gravity="center"
+            android:text="Scénario"
+            android:textColor="@color/colorAccent"
+
+            />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="300dp"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="150dp">
+            <ImageView
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_width="150dp"
+                android:layout_height="100dp"
+                android:background="@drawable/interieur"/>
+        <TextView
+            android:id="@+id/tempIntView"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="0dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:text="TEMP INT"
+            android:textColor="@color/colorBackground"
+            android:textSize="30dp"
+            android:textStyle="bold" />
+        </LinearLayout>
+        <TextView
+            android:id="@+id/diversIntView"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="20dp"
+            android:text="divers info interieur"
+            android:background="#EFFF"
+            android:textColor="@color/colorAccent"
+            android:gravity="center"
+
+            />
+
+        />
+
+        <TextView
+            android:id="@+id/consoView"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:text="consoActuelView"
+            android:background="#EFFF"
+            android:textColor="@color/colorAccent"
+            />
+
+        <ToggleButton
+            android:id="@+id/lampeIntButton"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="20dp"
+            android:text="ToggleButton" />
+
+        <ImageButton
+            android:id="@+id/lampeExtButton"
+            android:layout_width="49dp"
+            android:layout_height="50dp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/onoff2"/>
+
+        <ToggleButton
+            android:id="@+id/chauffageButton"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="20dp"
+            android:text="ToggleButton" />
+
+        <ToggleButton
+            android:id="@+id/scenarioButton"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="20dp"
+            android:text="ToggleButton" />
 
 
 
-    <TextView
-
-            android:id="@+id/dataView"
-            android:layout_width="294dp"
-            android:layout_height="wrap_content"
-            android:text="Chargement des données météo"
-        android:layout_weight="1.03"
-        android:layout_toLeftOf="@+id/lampeButton"
-        android:layout_toStartOf="@+id/lampeButton" />
-
-
-    <ToggleButton
-        android:id="@+id/lampeButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="ToggleButton"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
-
-    <Switch
-        android:id="@+id/lampeSwitch1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/lampeButton"
-        android:layout_alignStart="@+id/lampeButton"
-        android:layout_below="@+id/lampeButton"
-        android:layout_marginTop="12dp"
-        android:text="Lampe" />
-
-</RelativeLayout>
-
+    </LinearLayout>
+</LinearLayout>
