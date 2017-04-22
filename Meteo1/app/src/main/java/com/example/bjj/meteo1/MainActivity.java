@@ -39,9 +39,7 @@ public class MainActivity extends AppCompatActivity {
     //le bouton pour envoyer la commande d'activation
     Button start;
     //l'endroit où sont affichées les données
-    TextView tempExtView;
-    TextView tempIntView;
-    TextView lampeIntView;
+    TextView tempExtView,tempIntView,lampeIntView,lampeExtView,diversInfoExtView,diversInfoIntView,consoHistoView,consoActuelView, chauffageView, scenarioView;
     //la requête pour récupérer l'objet JSON
     RequestQueue requestQueue;
     //l'url de la vrai bdd
@@ -51,7 +49,8 @@ public class MainActivity extends AppCompatActivity {
     private String jsonResponse;
 
     //pour récupérer les données de la bdd
-    String histo_date_time, histo_temp_ext, histo_temp_int,histo_etat_act_1,histo_etat_act_2,histo_etat_act_3,un="1",zero="0";
+    String histo_date_time, histo_temp_ext, histo_temp_int,histo_etat_act_1,histo_etat_act_2,histo_etat_act_3,un="1",zero="0",allumee="allumée",diversInfoExt,diversInfoInt;
+     String consoHisto,consoActuel, chauffage, scenario;
     //pour l'auto-refresh des données
     Handler mHandler;
     //initialisation du socket
@@ -73,8 +72,15 @@ public class MainActivity extends AppCompatActivity {
         // le textview où sont affichés les données
         tempExtView = (TextView) findViewById(R.id.tempExtView);
         tempIntView = (TextView) findViewById(R.id.tempIntView);
-
+        diversInfoIntView = (TextView) findViewById(R.id.diversIntView);
+        diversInfoExtView = (TextView) findViewById(R.id.diversExtView);
+        consoHistoView = (TextView) findViewById(R.id.consohistoView);
+        consoActuelView = (TextView) findViewById(R.id.consoView);;
         lampeIntView = (TextView) findViewById(R.id.lampeIntView);
+        lampeExtView = (TextView) findViewById(R.id.lampeExtView);
+        chauffageView = (TextView) findViewById(R.id.chauffageView);
+        scenarioView = (TextView) findViewById(R.id.scenarioView);
+
         //request JSON
         requestQueue = Volley.newRequestQueue(this);
         //l'auto-refresh
@@ -175,7 +181,7 @@ public class MainActivity extends AppCompatActivity {
 
                             try {
                                    //date d'actualisation selon le format ci-dessous
-                                DateFormat df = new SimpleDateFormat("EEE, d MMM yyyy, HH:mm:ss");
+                                DateFormat df = new SimpleDateFormat("EEE, d MMM yyyy, HH:mm");
                                 String date = df.format(Calendar.getInstance().getTime());
                                     //récupération des éléments de l'array JSON
                                 histo_date_time = response.getString("histo_date_time");
@@ -210,33 +216,57 @@ public class MainActivity extends AppCompatActivity {
                                 else if(histo_etat_act_3.equals(zero)) {
                                     histo_etat_act_3 = "éteint";
                                 }
-
+                                if(histo_etat_act_1.equals(allumee))lampeButton.setChecked(true);
 
                                     //mise en page des éléments
                                 jsonResponse = "";
-                                jsonResponse += "Actualisé le : " + date + "\n\n";
-                                jsonResponse += "Numéro du bungalow : " + histo_bun_id + "\n\n";
-                                jsonResponse += "Température extérieure : " + histo_temp_ext + " Degrés\n\n";
-                                jsonResponse += "Température intérieure : " + histo_temp_int + " Degrés\n\n";
-                                jsonResponse += "Pluie : " + histo_mesure_pluie + " mm\n\n";
-                                jsonResponse += "Direction du vent : " + histo_direction_vent + "\n\n";
-                                jsonResponse += "Force du vent : " + histo_vent_valeur + "\n\n";
-                                jsonResponse += "UV : " + histo_uv + "\n\n";
-                                jsonResponse += "Consommation éléctrique : " + histo_conso_elect + " W\n\n";
+                            //    jsonResponse += "Actualisé le : " + date + "\n\n";
+                             //   jsonResponse += "Numéro du bungalow : " + histo_bun_id + "\n\n";
+                            //    jsonResponse += "Température extérieure : " + histo_temp_ext + " Degrés\n\n";
+                            //    jsonResponse += "Température intérieure : " + histo_temp_int + " Degrés\n\n";
+                            //    jsonResponse += "Pluie : " + histo_mesure_pluie + " mm\n\n";
+                            //    jsonResponse += "Direction du vent : " + histo_direction_vent + "\n\n";
+                            //    jsonResponse += "Force du vent : " + histo_vent_valeur + "\n\n";
+                             //   jsonResponse += "UV : " + histo_uv + "\n\n";
+                              //  jsonResponse += "Consommation éléctrique : " + histo_conso_elect + " W\n\n";
                                 jsonResponse += "Lampe intérieure : " + histo_etat_act_1 + "\n\n";
                                 jsonResponse += "Lampe extérieure : " + histo_etat_act_2 + "\n\n";
                                 jsonResponse += "Chauffage : " + histo_etat_act_3 + "\n\n";
-
+                                //
                                 histo_temp_ext += "°C";
+                                //
                                 histo_temp_int += "°C";
+                                //
+                                diversInfoExt ="";
+                                diversInfoExt += "Pluie : " + histo_mesure_pluie + " mm" +"UV : " + histo_uv + "\n";
+                                diversInfoExt += "Direction du vent : " + histo_direction_vent + " Force du vent : " + histo_vent_valeur + "\n";
+                                //
+                                diversInfoInt ="";
+                                diversInfoInt += "Numéro du bungalow : " + histo_bun_id + "\n\n";
+                                //
+                                consoHisto ="";
+                                consoHisto += "Actualisé le : " + date + "\n\n";
+                                //
+                                consoActuel ="";
+                                consoActuel += "Consommation éléctrique : " + histo_conso_elect + " W\n";
+                                //
                                 histo_etat_act_1 = "Eclairage du Salon : " + histo_etat_act_1;
+                                //
                                 histo_etat_act_2 = "Eclairage extérieur : " + histo_etat_act_2;
 
-
                                     //déclenchement de l'affichage
+
                                 tempExtView.setText(histo_temp_ext);
                                 tempIntView.setText(histo_temp_int);
+                                diversInfoExtView.setText(diversInfoExt);
+                                diversInfoIntView.setText(diversInfoInt);
+                                consoHistoView.setText(consoHisto);
+                                consoActuelView.setText(histo_temp_int);
                                 lampeIntView.setText(histo_etat_act_1);
+                                lampeExtView.setText(histo_etat_act_2);
+                                chauffageView.setText(histo_etat_act_3);
+                               // scenarioView.setText(histo_temp_int);
+
 
 
                                 //boucle pour récupérer la totalité des éléments
