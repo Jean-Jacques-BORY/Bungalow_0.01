@@ -46,7 +46,7 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/diversExtView"
+            android:id="@+id/diversIntView"
             android:layout_width="match_parent"
             android:layout_height="70dp"
             android:layout_marginBottom="20dp"
@@ -55,8 +55,9 @@
             android:layout_marginTop="20dp"
             android:background="#EFFF"
             android:gravity="center"
-            android:text="divers info exterieur"
-            android:textColor="@color/colorAccent" />
+            android:text="divers info"
+            android:textColor="@color/colorAccent"
+            android:textSize="20dp" />
 
         />
 
@@ -70,8 +71,9 @@
             android:layout_marginTop="20dp"
             android:background="#EFFF"
             android:gravity="center"
-            android:text="consoHistoView de la journée"
-            android:textColor="@color/colorAccent" />
+            android:text="Divers info"
+            android:textColor="@color/colorAccent"
+            android:textSize="20dp" />
 
         <TextView
             android:id="@+id/lampeIntView"
@@ -85,6 +87,7 @@
             android:gravity="center"
             android:text="Eclairage du salon"
             android:textColor="@color/colorAccent"
+            android:textSize="20dp"
 
             />
 
@@ -100,6 +103,7 @@
             android:gravity="center"
             android:text="Eclairage extérieur"
             android:textColor="@color/colorAccent"
+            android:textSize="20dp"
 
             />
 
@@ -115,7 +119,7 @@
             android:gravity="center"
             android:text="Chauffage"
             android:textColor="@color/colorAccent"
-
+            android:textSize="20dp"
             />
 
         <TextView
@@ -130,6 +134,7 @@
             android:gravity="center"
             android:text="Scénario"
             android:textColor="@color/colorAccent"
+            android:textSize="20dp"
 
             />
     </LinearLayout>
@@ -164,19 +169,20 @@
             android:textStyle="bold" />
         </LinearLayout>
         <TextView
-            android:id="@+id/diversIntView"
-            android:layout_width="match_parent"
-            android:layout_height="70dp"
-            android:layout_marginBottom="20dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginTop="20dp"
-            android:text="divers info interieur"
-            android:background="#EFFF"
-            android:textColor="@color/colorAccent"
-            android:gravity="center"
+        android:id="@+id/diversExtView"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_marginBottom="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="20dp"
+        android:background="#EFFF"
+        android:gravity="center"
+        android:text="divers info exterieur"
+        android:textColor="@color/colorAccent"
+        android:textSize="20dp"
+        />
 
-            />
 
         />
 
@@ -192,6 +198,7 @@
             android:text="consoActuelView"
             android:background="#EFFF"
             android:textColor="@color/colorAccent"
+            android:textSize="20dp"
             />
 
         <ToggleButton

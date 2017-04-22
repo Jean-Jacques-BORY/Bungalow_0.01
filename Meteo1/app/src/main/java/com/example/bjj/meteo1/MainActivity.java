@@ -50,7 +50,8 @@ public class MainActivity extends AppCompatActivity {
 
     //pour récupérer les données de la bdd
     String histo_date_time, histo_temp_ext, histo_temp_int,histo_etat_act_1,histo_etat_act_2,histo_etat_act_3,un="1",zero="0",allumee="allumée",diversInfoExt,diversInfoInt;
-     String consoHisto,consoActuel, chauffage, scenario;
+    String consoHisto,consoActuel, chauffage, scenario;
+    String lampeIntOn="p1$1",lampeIntOff="p1$0",lampeExtOn="p2$1",lampeExtOff="p2$0",chauffageOn="p3$1",chauffageOff="p3$0",scenOn="p4$1",scenOff="p4$0";
     //pour l'auto-refresh des données
     Handler mHandler;
     //initialisation du socket
@@ -94,10 +95,10 @@ public class MainActivity extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     // The toggle is enabled
-                    lampeOn();
+                    activate(lampeIntOn);
                 } else {
                     // The toggle is disabled
-                    lampeOff();
+                    deactivate(lampeIntOff);
                 }
             }
         });
@@ -114,17 +115,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //méthode pour allumer la lampe
-    public void lampeOn() {
+    public void activate(String str) {
         try {
             //lancement de la connexion Socket
             new Thread(new ClientThread()).start();
             Toast.makeText(MainActivity.this,"Allumage des feux du salon", Toast.LENGTH_SHORT).show();
-            String str = "p1$1";
             PrintWriter out = new PrintWriter(new BufferedWriter(
             new OutputStreamWriter(socket.getOutputStream())),
             true);
             out.println(str);
-
         } catch (UnknownHostException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -132,12 +131,13 @@ public class MainActivity extends AppCompatActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        Thread.currentThread().interrupt();
     }
     //méthode pour éteindre la lampe
-    public void lampeOff() {
+    public void deactivate(String str) {
         try {
             Toast.makeText(MainActivity.this,"Extinction des feux du salon", Toast.LENGTH_SHORT).show();
-            String str = "p1$0";
+            new Thread(new ClientThread()).start();
             PrintWriter out = new PrintWriter(new BufferedWriter(
                     new OutputStreamWriter(socket.getOutputStream())),
                     true);
@@ -149,6 +149,7 @@ public class MainActivity extends AppCompatActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        Thread.currentThread().interrupt();
     }
 
 //ouverture du socket avec l'adresse ip du serveur et son port
@@ -194,13 +195,14 @@ public class MainActivity extends AppCompatActivity {
                                 String histo_conso_elect = response.getString("histo_conso_elect");
                                 String histo_bun_id = response.getString("histo_bun_id");
                                 histo_etat_act_1 = response.getString("histo_etat_act_1");
+                                //pour vérifier dès le départ si les actionneurs sont allumés pour que les boutons d'activation soient cohérents
                                 if(histo_etat_act_1.equals(un)) {
                                     histo_etat_act_1 = "allumée";
                                 }
                                 else if(histo_etat_act_1.equals(zero)) {
                                     histo_etat_act_1 = "éteinte";
                                 }
-
+                                //
                                 histo_etat_act_2 = response.getString("histo_etat_act_2");
                                 if(histo_etat_act_2.equals(un)) {
                                     histo_etat_act_2 = "allumée";
@@ -208,7 +210,7 @@ public class MainActivity extends AppCompatActivity {
                                 else if(histo_etat_act_2.equals(zero)) {
                                     histo_etat_act_2 = "éteinte";
                                 }
-
+                                //
                                 histo_etat_act_3 = response.getString("histo_etat_act_3");
                                 if(histo_etat_act_3.equals(un)) {
                                     histo_etat_act_3 = "allumé";
@@ -216,22 +218,9 @@ public class MainActivity extends AppCompatActivity {
                                 else if(histo_etat_act_3.equals(zero)) {
                                     histo_etat_act_3 = "éteint";
                                 }
-                                if(histo_etat_act_1.equals(allumee))lampeButton.setChecked(true);
+                                if(histo_etat_act_1.equals(allumee))lampeButton.setChecked(true);else lampeButton.setChecked(false);
 
                                     //mise en page des éléments
-                                jsonResponse = "";
-                            //    jsonResponse += "Actualisé le : " + date + "\n\n";
-                             //   jsonResponse += "Numéro du bungalow : " + histo_bun_id + "\n\n";
-                            //    jsonResponse += "Température extérieure : " + histo_temp_ext + " Degrés\n\n";
-                            //    jsonResponse += "Température intérieure : " + histo_temp_int + " Degrés\n\n";
-                            //    jsonResponse += "Pluie : " + histo_mesure_pluie + " mm\n\n";
-                            //    jsonResponse += "Direction du vent : " + histo_direction_vent + "\n\n";
-                            //    jsonResponse += "Force du vent : " + histo_vent_valeur + "\n\n";
-                             //   jsonResponse += "UV : " + histo_uv + "\n\n";
-                              //  jsonResponse += "Consommation éléctrique : " + histo_conso_elect + " W\n\n";
-                                jsonResponse += "Lampe intérieure : " + histo_etat_act_1 + "\n\n";
-                                jsonResponse += "Lampe extérieure : " + histo_etat_act_2 + "\n\n";
-                                jsonResponse += "Chauffage : " + histo_etat_act_3 + "\n\n";
                                 //
                                 histo_temp_ext += "°C";
                                 //
@@ -242,10 +231,10 @@ public class MainActivity extends AppCompatActivity {
                                 diversInfoExt += "Direction du vent : " + histo_direction_vent + " Force du vent : " + histo_vent_valeur + "\n";
                                 //
                                 diversInfoInt ="";
-                                diversInfoInt += "Numéro du bungalow : " + histo_bun_id + "\n\n";
+                                diversInfoInt += "Vous êtes dans le bungalow numéro " + histo_bun_id + "\n\n";
                                 //
                                 consoHisto ="";
-                                consoHisto += "Actualisé le : " + date + "\n\n";
+                                consoHisto += "Nous sommes le : " + date ;
                                 //
                                 consoActuel ="";
                                 consoActuel += "Consommation éléctrique : " + histo_conso_elect + " W\n";
@@ -253,27 +242,25 @@ public class MainActivity extends AppCompatActivity {
                                 histo_etat_act_1 = "Eclairage du Salon : " + histo_etat_act_1;
                                 //
                                 histo_etat_act_2 = "Eclairage extérieur : " + histo_etat_act_2;
-
+                                //
+                                histo_etat_act_3 = "Chauffage : " + histo_etat_act_3;
+                                //
+                                scenario = "Scénario :";
                                     //déclenchement de l'affichage
-
                                 tempExtView.setText(histo_temp_ext);
                                 tempIntView.setText(histo_temp_int);
                                 diversInfoExtView.setText(diversInfoExt);
                                 diversInfoIntView.setText(diversInfoInt);
                                 consoHistoView.setText(consoHisto);
-                                consoActuelView.setText(histo_temp_int);
+                                consoActuelView.setText(consoActuel);
                                 lampeIntView.setText(histo_etat_act_1);
                                 lampeExtView.setText(histo_etat_act_2);
                                 chauffageView.setText(histo_etat_act_3);
-                               // scenarioView.setText(histo_temp_int);
-
-
-
+                                scenarioView.setText(scenario);
                                 //boucle pour récupérer la totalité des éléments
                                 // for (int i = 0; i < /*jsonArray.length()*/ 3; i++) {
                                 //  JSONObject list = jsonArray.getJSONObject(i);
                                 // String dt = list.getString("dt");
-
                                    /*     textView.append("dt : " + dt + "\n");*/
                                 //on attrape les exceptions s'il y en a
                             } catch (JSONException e) {
@@ -291,8 +278,8 @@ public class MainActivity extends AppCompatActivity {
             requestQueue.add(jsonObjectRequest);
             // décommenter le test de l'auto-refresh pour vérifier qu'il marche bien
           //  Toast.makeText(MainActivity.this,"in runnable",Toast.LENGTH_SHORT).show();
-            //relance de la méthode dans le mainActivity toutes les minutes ou 60000ms
-            MainActivity.this.mHandler.postDelayed(m_Runnable,5000);
+            //relance de la méthode dans le mainActivity toutes les 10 secondes ou 10000ms
+            MainActivity.this.mHandler.postDelayed(m_Runnable,10000);
         }
     };
 }
