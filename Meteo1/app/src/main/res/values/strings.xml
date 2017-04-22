@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Application Bungalow</string>
+    <string name="app_name2">EcoBungalow</string>
+    <string name="id">Identifiant</string>
+    <string name="password">Mot de passe</string>
+    <string name="login">Se connecter</string>
+</resources>
