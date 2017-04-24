@@ -363,7 +363,7 @@
             android:layout_height="match_parent"
             android:background="@drawable/effects"
             android:gravity="center"
-            android:text="Conso de la journée"
+            android:text="Conso moyenne de la journée"
             android:textColor="@color/colorBackground"
             android:textSize="20dp" />
 
