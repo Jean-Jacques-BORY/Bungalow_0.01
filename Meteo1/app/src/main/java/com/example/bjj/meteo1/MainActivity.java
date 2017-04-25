@@ -21,9 +21,13 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.InterruptedIOException;
 import java.io.OutputStreamWriter;
+import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.net.Socket;
@@ -48,18 +52,18 @@ public class MainActivity extends AppCompatActivity {
     //l'url en local pour test
     //String url = "http://192.168.1.81/rest/api.php/historique/3";
     //String url = "http://192.168.42.240/rest/api.php/historique/3";
-    static String histo_etat_act_1, histo_etat_act_2, histo_etat_act_3;
+    static String allumee = "allumée",histo_etat_act_1="éteinte", histo_etat_act_2, histo_etat_act_3;
     private String jsonResponse;
     //pour récupérer les données de la bdd
     //
     static int i = 0;
     //
-    String lampeIntOn = "p1$1", lampeIntOff = "p1$0", lampeExtOn = "p2$1", lampeExtOff = "p2$0", chauffageOn = "p3$1", chauffageOff = "p3$0", scenOn = "s1$1", scenOff = "s1$0";
+    String lampeIntOn = "1$1$1", lampeIntOff = "1$1$0", lampeExtOn = "1$2$1", lampeExtOff = "1$2$0", chauffageOn = "1$3$1", chauffageOff = "1$3$0", scenOn = "1$4$1", scenOff = "1$4$0";
     //pour l'auto-refresh des données
     Handler mHandler;
     //initialisation du socket
     private Socket socket;
-    private static final int SERVERPORT = 5000;
+    private static final int SERVERPORT = 6000;
     private static final String SERVER_IP = "172.30.0.230";
     //
     //ToggleButton lampeButton;
@@ -100,14 +104,14 @@ public class MainActivity extends AppCompatActivity {
         lampeIntOnButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(MainActivity.this, "activate lampe int", Toast.LENGTH_LONG).show();
+               // Toast.makeText(MainActivity.this, "activate lampe int", Toast.LENGTH_LONG).show();
                 activate(lampeIntOn);
             }
         });
         lampeIntOffButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(MainActivity.this, "deactivate lampe int", Toast.LENGTH_LONG).show();
+               // Toast.makeText(MainActivity.this, "deactivate lampe int", Toast.LENGTH_LONG).show();
                 deactivate(lampeIntOff);
             }
         });
@@ -115,14 +119,14 @@ public class MainActivity extends AppCompatActivity {
         lampeExtOnButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(MainActivity.this, "activate lampe ext", Toast.LENGTH_LONG).show();
+               // Toast.makeText(MainActivity.this, "activate lampe ext", Toast.LENGTH_LONG).show();
                 activate(lampeExtOn);
             }
         });
         lampeExtOffButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(MainActivity.this, "deactivate lampe ext", Toast.LENGTH_LONG).show();
+               // Toast.makeText(MainActivity.this, "deactivate lampe ext", Toast.LENGTH_LONG).show();
                 deactivate(lampeExtOff);
             }
         });
@@ -156,15 +160,17 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Toast.makeText(getApplicationContext(),"Allumage des feux extérieur",Toast.LENGTH_LONG).show();
-
             }
         });
 */
-
     }
 
     //méthode pour allumer la lampe
     public void activate(String str) {
+
+        BufferedReader in;
+        //String strAuth ="1";
+
         try {
             //lancement de la connexion Socket
             new Thread(new ClientThread()).start();
@@ -173,6 +179,14 @@ public class MainActivity extends AppCompatActivity {
                     new OutputStreamWriter(socket.getOutputStream())),
                     true);
             out.println(str);
+
+            in = new BufferedReader (new InputStreamReader(socket.getInputStream()));
+            String message_distant = in.readLine();
+            Toast.makeText(MainActivity.this, message_distant, Toast.LENGTH_SHORT).show();
+            socket.close();
+        } catch (InterruptedIOException e) { // Si l'interruption a été gérée correctement.
+            Thread.currentThread().interrupt();
+            Toast.makeText(MainActivity.this, "Interrompu via InterruptedIOException", Toast.LENGTH_SHORT).show();
         } catch (UnknownHostException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -180,11 +194,15 @@ public class MainActivity extends AppCompatActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        Thread.currentThread().interrupt();
+
     }
 
     //méthode pour éteindre la lampe
     public void deactivate(String str) {
+
+        BufferedReader in;
+        //String strAuth ="1";
+
         try {
             Toast.makeText(MainActivity.this, "Extinction des feux du salon", Toast.LENGTH_SHORT).show();
             new Thread(new ClientThread()).start();
@@ -192,6 +210,14 @@ public class MainActivity extends AppCompatActivity {
                     new OutputStreamWriter(socket.getOutputStream())),
                     true);
             out.println(str);
+
+            in = new BufferedReader (new InputStreamReader(socket.getInputStream()));
+            String message_distant = in.readLine();
+            Toast.makeText(MainActivity.this, message_distant, Toast.LENGTH_SHORT).show();
+            socket.close();
+        } catch (InterruptedIOException e) { // Si l'interruption a été gérée correctement.
+            Thread.currentThread().interrupt();
+            Toast.makeText(MainActivity.this, "Interrompu via InterruptedIOException", Toast.LENGTH_SHORT).show();
         } catch (UnknownHostException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -199,7 +225,7 @@ public class MainActivity extends AppCompatActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        Thread.currentThread().interrupt();
+       Thread.currentThread().interrupt();
     }
 
 //ouverture du socket avec l'adresse ip du serveur et son port
@@ -231,7 +257,7 @@ public class MainActivity extends AppCompatActivity {
                         public void onResponse(JSONObject response) {
 
                             try {
-                                String histo_date_time, histo_temp_ext, histo_temp_int, un = "1", zero = "0", allumee = "allumée", diversInfoExt, diversInfoInt;
+                                String histo_date_time, histo_temp_ext, histo_temp_int, un = "1", zero = "0",  diversInfoExt, diversInfoInt;
                                 String histo_hum_int, histo_vent_valeur, histo_direction_vent, histo_mesure_pluie, consoHisto, consoActuel, chauffage, scenario;
 
                                 //date d'actualisation selon le format ci-dessous
