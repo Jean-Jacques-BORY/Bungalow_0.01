@@ -1,5 +1,6 @@
 package com.example.bjj.meteo1;
 
+import android.os.AsyncTask;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -23,6 +24,7 @@ import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.InterruptedIOException;
@@ -48,9 +50,9 @@ public class MainActivity extends AppCompatActivity {
     //la requête pour récupérer l'objet JSON
     RequestQueue requestQueue;
     //l'url de la vrai bdd
-    String url = "http://172.30.0.230/rest/api.php/Historique/3";
+    //String url = "http://172.30.0.230/rest/api.php/Historique/3";
     //l'url en local pour test
-    //String url = "http://192.168.1.81/rest/api.php/historique/3";
+    String url = "http://192.168.1.81/rest/api.php/historique/3";
     //String url = "http://192.168.42.240/rest/api.php/historique/3";
     static String allumee = "allumée",histo_etat_act_1="", histo_etat_act_2="", histo_etat_act_3="";
     private String jsonResponse;
@@ -59,12 +61,14 @@ public class MainActivity extends AppCompatActivity {
     static int i = 0;
     //
     String lampeIntOn = "1$1$1", lampeIntOff = "1$1$0", lampeExtOn = "1$2$1", lampeExtOff = "1$2$0", chauffageOn = "1$3$1", chauffageOff = "1$3$0", scenOn = "1$4$1", scenOff = "1$4$0";
+    static String ONOFF = "";
     //pour l'auto-refresh des données
     Handler mHandler;
     //initialisation du socket
     private Socket socket;
-    private static final int SERVERPORT = 6001;
-    private static final String SERVER_IP = "172.30.0.230";
+    private static final int SERVERPORT = 6009;
+   // private static final String SERVER_IP = "172.30.0.230";
+   private static final String SERVER_IP = "192.168.1.98";
     //
     //ToggleButton lampeButton;
     //
@@ -77,6 +81,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         //affichage du activity_main.xml
         setContentView(R.layout.activity_main);
+        //
+        //new Thread(new ClientThread()).start();
         // le textview où sont affichés les données
         tempExtView = (TextView) findViewById(R.id.tempExtView);
         tempIntView = (TextView) findViewById(R.id.tempIntView);
@@ -106,33 +112,37 @@ public class MainActivity extends AppCompatActivity {
         lampeIntOnButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               // Toast.makeText(MainActivity.this, "activate lampe int", Toast.LENGTH_LONG).show();
-               // new Thread(new ClientThread()).start();
-                activate(lampeIntOn);
+                Toast.makeText(MainActivity.this, "Allumage de l'éclairage salon en cours", Toast.LENGTH_LONG).show();
+                ONOFF="1$1$1";
+                new Thread(new ClientThread()).start();
+                //activate(lampeIntOn);
 
             }
         });
         lampeIntOffButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               // Toast.makeText(MainActivity.this, "deactivate lampe int", Toast.LENGTH_LONG).show();
-                //new Thread(new ClientThread()).start();
-                deactivate(lampeIntOff);
+                Toast.makeText(MainActivity.this, "Extinction de l'éclairage salon en cours", Toast.LENGTH_LONG).show();
+                ONOFF="1$1$0";
+                new Thread(new ClientThread()).start();
+                //deactivate(lampeIntOff);
             }
         });
         //
         lampeExtOnButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               // Toast.makeText(MainActivity.this, "activate lampe ext", Toast.LENGTH_LONG).show();
-                activate(lampeExtOn);
+                Toast.makeText(MainActivity.this, "Allumage de l'éclairage extérieur en cours", Toast.LENGTH_LONG).show();
+                ONOFF="1$2$1";
+                new Thread(new ClientThread()).start();
             }
         });
         lampeExtOffButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               // Toast.makeText(MainActivity.this, "deactivate lampe ext", Toast.LENGTH_LONG).show();
-                deactivate(lampeExtOff);
+                Toast.makeText(MainActivity.this, "Extinction de l'éclairage extérieur en cours", Toast.LENGTH_LONG).show();
+                ONOFF="1$2$0";
+                new Thread(new ClientThread()).start();
             }
         });
         chauffageOnButton.setOnClickListener(new View.OnClickListener() {
@@ -221,15 +231,19 @@ public class MainActivity extends AppCompatActivity {
 
         BufferedReader in;
         //String strAuth ="1";
-
+        new Thread(new ClientThread()).start();
         try {
             //lancement de la connexion Socket
-            new Thread(new ClientThread()).start();
+
+
             Toast.makeText(MainActivity.this, "Allumage en cours", Toast.LENGTH_SHORT).show();
             PrintWriter out = new PrintWriter(new BufferedWriter(
                     new OutputStreamWriter(socket.getOutputStream())),
                     true);
-            out.println(str);
+            out.print(str);
+            out.flush();
+            out.close();
+
 
            // out.close();
           /*  in = new BufferedReader (new InputStreamReader(socket.getInputStream()));
@@ -255,19 +269,23 @@ public class MainActivity extends AppCompatActivity {
 
         try {
 
+
             new Thread(new ClientThread()).start();
             Toast.makeText(MainActivity.this, "Extinction en cours", Toast.LENGTH_SHORT).show();
             PrintWriter out = new PrintWriter(new BufferedWriter(
                     new OutputStreamWriter(socket.getOutputStream())),true);
-            out.println(str);
-            Thread.currentThread().join(50);
-            //out.close();
 
+           //out.println(str);
+            out.print(str);
+            //out.close();
+            out.flush();
+            out.close();
            /* in = new BufferedReader (new InputStreamReader(socket.getInputStream()));
             String message_distant = in.readLine();
             Toast.makeText(MainActivity.this, message_distant, Toast.LENGTH_SHORT).show();*/
            // socket.close();
-            //Thread.currentThread().interrupt();
+
+
             // Toast.makeText(MainActivity.this, "Interrompu via Main", Toast.LENGTH_SHORT).show();
           } catch (InterruptedIOException e) { // Si l'interruption a été gérée correctement.
             Toast.makeText(MainActivity.this, "Interrompu via InterruptedIOException", Toast.LENGTH_SHORT).show();
@@ -282,11 +300,23 @@ public class MainActivity extends AppCompatActivity {
 
 //ouverture du socket avec l'adresse ip du serveur et son port
     private class ClientThread implements Runnable {
+    //String str = "$1$1$1";
         @Override
         public void run() {
             try {
                 InetAddress serverAddr = InetAddress.getByName(SERVER_IP);
                 socket = new Socket(serverAddr, SERVERPORT);
+               // Toast.makeText(MainActivity.this, "Extinction en cours", Toast.LENGTH_SHORT).show();
+                PrintWriter out = new PrintWriter(new BufferedWriter(
+                        new OutputStreamWriter(socket.getOutputStream())),true);
+
+                //out.println(str);
+                out.print(ONOFF);
+                //out.close();
+                out.flush();
+                out.close();
+
+
             } catch (UnknownHostException e1) {
                 e1.printStackTrace();
             } catch (IOException e1) {
