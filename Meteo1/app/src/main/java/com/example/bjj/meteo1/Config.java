@@ -6,8 +6,8 @@ package com.example.bjj.meteo1;
 
 public class Config {
     //URL to our login.php file
-    //public static final String LOGIN_URL = "http://172.30.0.230/login.php";
-   public static final String LOGIN_URL = "http://192.168.1.81/login.php";
+      public static final String LOGIN_URL = "http://172.30.0.230/login.php";
+   //public static final String LOGIN_URL = "http://192.168.1.81/login.php";
     //public static final String LOGIN_URL = "http://192.168.42.240/login.php";
 
     //Keys for email and password as defined in our $_POST['key'] in login.php

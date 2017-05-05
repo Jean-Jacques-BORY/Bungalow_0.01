@@ -52,8 +52,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         buttonLogin.setOnClickListener(this);
     }
 
-
-
     private void login(){
         //Getting values from edit texts
         final String email = editTextEmail.getText().toString().trim();
