@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
     //
     static int i = 0;
     //
-    String lampeIntOn = "1$1$1", lampeIntOff = "1$1$0", lampeExtOn = "1$2$1", lampeExtOff = "1$2$0", chauffageOn = "1$3$1", chauffageOff = "1$3$0", scenOn = "1$4$1", scenOff = "1$4$0";
+    //String lampeIntOn = "1$1$1", lampeIntOff = "1$1$0", lampeExtOn = "1$2$1", lampeExtOff = "1$2$0", chauffageOn = "1$3$1", chauffageOff = "1$3$0", scenOn = "1$4$1", scenOff = "1$4$0";
     static String ONOFF = "";
     //pour l'auto-refresh des données
     Handler mHandler;
@@ -72,8 +72,8 @@ public class MainActivity extends AppCompatActivity {
     //
     //ToggleButton lampeButton;
     //
-    Switch lampeSwitch1;
-    ImageButton imgButton;
+    //Switch lampeSwitch1;
+    //ImageButton imgButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
         //affichage du activity_main.xml
         setContentView(R.layout.activity_main);
         //
-        //new Thread(new ClientThread()).start();
+
         // le textview où sont affichés les données
         tempExtView = (TextView) findViewById(R.id.tempExtView);
         tempIntView = (TextView) findViewById(R.id.tempIntView);
@@ -97,6 +97,7 @@ public class MainActivity extends AppCompatActivity {
         dateView = (TextView) findViewById(R.id.dateView);
         uvTextView = (TextView) findViewById(R.id.uvTextView);
         consoActuelView = (TextView) findViewById(R.id.consoActuelView);
+
         //les boutons on et off
         lampeIntOnButton = (Button) findViewById(R.id.lampeIntOnButton);
         lampeIntOffButton = (Button) findViewById(R.id.lampeIntOffButton);
@@ -104,11 +105,13 @@ public class MainActivity extends AppCompatActivity {
         lampeExtOffButton = (Button) findViewById(R.id.lampeExtOffButton);
         chauffageOnButton = (Button) findViewById(R.id.chauffageOnButton);
         chauffageOffButton = (Button) findViewById(R.id.chauffageOffButton);
-        //les images changeantes
+
+        //initialiser les vues Images avec leur identifiants XML
         lampeIntImageView = (ImageView) findViewById(R.id.lampeIntImageView);
         lampeExtImageView = (ImageView) findViewById(R.id.lampeExtImageView);
         chauffageIntImageView = (ImageView) findViewById(R.id.chauffageIntImageView);
-        //les actionneurs
+
+        //les méthodes pour les actionneurs
         lampeIntOnButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -160,53 +163,25 @@ public class MainActivity extends AppCompatActivity {
         });
         //request JSON
         requestQueue = Volley.newRequestQueue(this);
-        //
-       /* lampeButton = (ToggleButton) findViewById(R.id.lampeIntButton);
-        //
-        lampeButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    // The toggle is enabled
-                    activate(lampeIntOn);
-                } else {
-                    // The toggle is disabled
-                    deactivate(lampeIntOff);
-                }
-            }
-        });
-        */
         //l'auto-refresh
         this.mHandler = new Handler();
         //activation de la méhthode Runnable, qui boucle toutes les 5 secondes
         m_Runnable.run();
         m_Action.run();
-
-      /*  imgButton =(ImageButton)findViewById(R.id.lampeExtButton);
-        imgButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getApplicationContext(),"Allumage des feux extérieur",Toast.LENGTH_LONG).show();
-            }
-        });
-*/
     }
 
-    //méthode pour allumer la lampe
-    //class pour envoyer les commandes aux actionneurs
+    //classe pour envoyer les commandes aux actionneurs
     private class ClientThread implements Runnable {
-    //String str = "$1$1$1";
         @Override
         public void run() {
             try {
                 //ouverture du socket avec l'adresse ip du serveur et son port
                 InetAddress serverAddr = InetAddress.getByName(SERVER_IP);
                 socket = new Socket(serverAddr, SERVERPORT);
-               // Toast.makeText(MainActivity.this, "Extinction en cours", Toast.LENGTH_SHORT).show();
                 PrintWriter out = new PrintWriter(new BufferedWriter(
                         new OutputStreamWriter(socket.getOutputStream())),true);
                 //out.println(str);
                 out.print(ONOFF);
-                //out.close();
                 out.flush();
                 out.close();
             } catch (UnknownHostException e1) {
@@ -249,38 +224,7 @@ public class MainActivity extends AppCompatActivity {
                                 histo_vent_valeur = response.getString("histo_vent_valeur");
                                 //
                                 String histo_uv = response.getString("histo_uv");
-
-                                //pour vérifier dès le départ si les actionneurs sont allumés pour que les boutons d'activation soient cohérents
-                                histo_etat_act_1 = response.getString("histo_etat_act_1");
-                                if (histo_etat_act_1.equals(un)) {
-                                    histo_etat_act_1 = "allumée";
-                                } else if (histo_etat_act_1.equals(zero)) {
-                                    histo_etat_act_1 = "éteinte";
-                                }
-
-                                histo_etat_act_2 = response.getString("histo_etat_act_2");
-                                if(histo_etat_act_2.equals(un)) {
-                                    histo_etat_act_2 = "allumée";
-                                }
-                                else if(histo_etat_act_2.equals(zero)) {
-                                    histo_etat_act_2 = "éteinte";
-                                }
-                                //
-                                histo_etat_act_3 = response.getString("histo_etat_act_3");
-                                if(histo_etat_act_3.equals(un)) {
-                                    histo_etat_act_3 = "allumée";
-                                }
-                                else if(histo_etat_act_3.equals(zero)) {
-                                    histo_etat_act_3 = "éteinte";
-                                }
-
-                                //initialisalisation du bouton d'activation, pour qu'il soit dans le bon état
-
-                               /* if (i==0){
-                                if(histo_etat_act_1.equals(allumee))lampeButton.setChecked(true);else lampeButton.setChecked(false);i++;}*/
-
-
-                                //mise en page des éléments
+                                //mise en page des éléments si nécessaire
                                 //
                                 histo_temp_ext += "°c ";
                                 //
@@ -298,6 +242,29 @@ public class MainActivity extends AppCompatActivity {
                                 histo_conso_elect += response.getString("histo_conso_elect");
                                 histo_conso_elect += " W";
                                 //
+                                //on modifie la valeur 1 en allumée et zéro en éteinte, afin de pouvoir faire des comparaisons entre chaînes de caractères par la suite
+                                histo_etat_act_1 = response.getString("histo_etat_act_1");
+                                if (histo_etat_act_1.equals(un)) {
+                                    histo_etat_act_1 = "allumée";
+                                } else if (histo_etat_act_1.equals(zero)) {
+                                    histo_etat_act_1 = "éteinte";
+                                }
+                                histo_etat_act_2 = response.getString("histo_etat_act_2");
+                                if(histo_etat_act_2.equals(un)) {
+                                    histo_etat_act_2 = "allumée";
+                                }
+                                else if(histo_etat_act_2.equals(zero)) {
+                                    histo_etat_act_2 = "éteinte";
+                                }
+                                //
+                                histo_etat_act_3 = response.getString("histo_etat_act_3");
+                                if(histo_etat_act_3.equals(un)) {
+                                    histo_etat_act_3 = "allumée";
+                                }
+                                else if(histo_etat_act_3.equals(zero)) {
+                                    histo_etat_act_3 = "éteinte";
+                                }
+
                                 //déclenchement de l'affichage
                                 tempExtView.setText(histo_temp_ext);
                                 diversInfoIntView.setText(diversInfoInt);
@@ -318,7 +285,6 @@ public class MainActivity extends AppCompatActivity {
                         }
                     });
             requestQueue.add(jsonObjectRequest);
-            //Toast.makeText(MainActivity.this,"in runnable",Toast.LENGTH_SHORT).show();
             //relance de la méthode dans le mainActivity toutes les 10 secondes ou 10000ms
             MainActivity.this.mHandler.postDelayed(m_Runnable, 10000);
         }
@@ -352,7 +318,7 @@ public class MainActivity extends AppCompatActivity {
             else {
                 chauffageIntImageView.setImageResource(R.drawable.lampe_int_off1);
             }
-
+            //boucle toutes les secondes
             MainActivity.this.mHandler.postDelayed(m_Action,1000);
         }
     };
