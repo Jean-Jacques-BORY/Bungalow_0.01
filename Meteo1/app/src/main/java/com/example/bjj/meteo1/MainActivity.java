@@ -43,17 +43,18 @@ public class MainActivity extends AppCompatActivity {
     //le bouton pour envoyer la commande d'activation
     Button start;
     //l'endroit où sont affichées les données
-    TextView dateView, tempExtView, tempIntView, lampeIntView, lampeExtView, diversInfoExtView, diversInfoIntView, consoHistoView, consoActuelView, chauffageView, scenarioView, uvTextView;
+    TextView dateView, tempExtView, tempIntView, lampeIntView, lampeExtView, diversIntView, diversInfoIntView, consoHistoView, consoActuelView, chauffageView, scenarioView, uvTextView;
     TextView ventTextView, pluieTextView;
-    ImageView lampeIntImageView, lampeExtImageView, chauffageIntImageView;
-    Button lampeIntOnButton, lampeIntOffButton, lampeExtOnButton, lampeExtOffButton,chauffageOnButton,chauffageOffButton;
+    ImageView lampeIntImageView, lampeExtImageView, chauffageIntImageView, scenarioImageView1, scenarioImageView2, scenarioImageView3;
+    Button lampeIntOnButton, lampeIntOffButton, lampeExtOnButton, lampeExtOffButton,chauffageOnButton,chauffageOffButton, scenarioOnButton1, scenarioOffButton1,scenarioOnButton2,scenarioOffButton2,scenarioOnButton3,scenarioOffButton3;
     //la requête pour récupérer l'objet JSON
     RequestQueue requestQueue;
     //l'url de la vrai bdd
-    String url = "http://172.30.0.230/rest/api.php/Historique/3";
+    String url = "http://172.30.0.230/rest/api.php/Bungalow/14";
+	//String url_scenario = "http://172.30.0.230/rest/api.php/bungalow/13
     //l'url en local pour test
-    //String url = "http://192.168.1.81/rest/api.php/historique/3";
-    //String url = "http://192.168.42.240/rest/api.php/historique/3";
+    //String url = "http://192.168.1.81/rest/api.php/bungalow/13";
+    //String url = "http://192.168.42.240/rest/api.php/bungalow/13";
     static String allumee = "allumée",histo_etat_act_1="", histo_etat_act_2="", histo_etat_act_3="";
     private String jsonResponse;
     //pour récupérer les données de la bdd
@@ -86,17 +87,17 @@ public class MainActivity extends AppCompatActivity {
         // le textview où sont affichés les données
         tempExtView = (TextView) findViewById(R.id.tempExtView);
         tempIntView = (TextView) findViewById(R.id.tempIntView);
-        diversInfoIntView = (TextView) findViewById(R.id.diversIntView);
+        diversIntView = (TextView) findViewById(R.id.diversIntView);
+        pluieTextView = (TextView) findViewById(R.id.pluieTextView);
         /*diversInfoExtView = (TextView) findViewById(R.id.diversExtView);
-        consoHistoView = (TextView) findViewById(R.id.consohistoView);
-        consoActuelView = (TextView) findViewById(R.id.consoView);*/
+        consoHistoView = (TextView) findViewById(R.id.consohistoView);*/
+        consoActuelView = (TextView) findViewById(R.id.consoActuelView);
         lampeIntView = (TextView) findViewById(R.id.lampeIntView);
         lampeExtView = (TextView) findViewById(R.id.lampeExtView);
         //chauffageView = (TextView) findViewById(R.id.chauffageView);
         scenarioView = (TextView) findViewById(R.id.scenarioView);
         dateView = (TextView) findViewById(R.id.dateView);
         uvTextView = (TextView) findViewById(R.id.uvTextView);
-        consoActuelView = (TextView) findViewById(R.id.consoActuelView);
 
         //les boutons on et off
         lampeIntOnButton = (Button) findViewById(R.id.lampeIntOnButton);
@@ -105,12 +106,20 @@ public class MainActivity extends AppCompatActivity {
         lampeExtOffButton = (Button) findViewById(R.id.lampeExtOffButton);
         chauffageOnButton = (Button) findViewById(R.id.chauffageOnButton);
         chauffageOffButton = (Button) findViewById(R.id.chauffageOffButton);
+        scenarioOnButton1 = (Button) findViewById(R.id.scenarioOnButton1);
+        scenarioOffButton1 = (Button) findViewById(R.id.scenarioOffButton1);
+        scenarioOnButton2 = (Button) findViewById(R.id.scenarioOnButton2);
+        scenarioOffButton2 = (Button) findViewById(R.id.scenarioOffButton2);
+        scenarioOnButton3 = (Button) findViewById(R.id.scenarioOnButton3);
+        scenarioOffButton3 = (Button) findViewById(R.id.scenarioOffButton3);
 
         //initialiser les vues Images avec leur identifiants XML
         lampeIntImageView = (ImageView) findViewById(R.id.lampeIntImageView);
         lampeExtImageView = (ImageView) findViewById(R.id.lampeExtImageView);
         chauffageIntImageView = (ImageView) findViewById(R.id.chauffageIntImageView);
-
+        scenarioImageView1 = (ImageView) findViewById(R.id.scenarioImageView1);
+        scenarioImageView2 = (ImageView) findViewById(R.id.scenarioImageView2);
+        scenarioImageView3 = (ImageView) findViewById(R.id.scenarioImageView3);
         //les méthodes pour les actionneurs
         lampeIntOnButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -128,23 +137,7 @@ public class MainActivity extends AppCompatActivity {
                 new Thread(new ClientThread()).start();
             }
         });
-        //
-        lampeExtOnButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(MainActivity.this, "Allumage de l'éclairage extérieur en cours", Toast.LENGTH_LONG).show();
-                ONOFF="1$2$1";
-                new Thread(new ClientThread()).start();
-            }
-        });
-        lampeExtOffButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(MainActivity.this, "Extinction de l'éclairage extérieur en cours", Toast.LENGTH_LONG).show();
-                ONOFF="1$2$0";
-                new Thread(new ClientThread()).start();
-            }
-        });
+
         chauffageOnButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -161,13 +154,30 @@ public class MainActivity extends AppCompatActivity {
                 new Thread(new ClientThread()).start();
             }
         });
+        //
+        scenarioOnButton1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(MainActivity.this, "Allumage de l'éclairage extérieur en cours", Toast.LENGTH_LONG).show();
+                ONOFF="1$2$1";
+                new Thread(new ClientThread()).start();
+            }
+        });
+        scenarioOffButton1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(MainActivity.this, "Allumage de l'éclairage extérieur en cours", Toast.LENGTH_LONG).show();
+                ONOFF="1$2$1";
+                new Thread(new ClientThread()).start();
+            }
+        });
         //request JSON
         requestQueue = Volley.newRequestQueue(this);
         //l'auto-refresh
         this.mHandler = new Handler();
         //activation de la méhthode Runnable, qui boucle toutes les 5 secondes
         m_Runnable.run();
-        m_Action.run();
+        //m_Action.run();
     }
 
     //classe pour envoyer les commandes aux actionneurs
@@ -195,7 +205,6 @@ public class MainActivity extends AppCompatActivity {
     //Runnable auto-Refresh et récupération des données
     private final Runnable m_Runnable = new Runnable() {
         public void run()
-
         {
             JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null,
                     new Response.Listener<JSONObject>() {
@@ -203,75 +212,98 @@ public class MainActivity extends AppCompatActivity {
                         public void onResponse(JSONObject response) {
 
                             try {
-                                String histo_date_time, histo_temp_ext, histo_temp_int, un = "1", zero = "0",  diversInfoExt, diversInfoInt;
-                                String histo_hum_int, histo_vent_valeur, histo_direction_vent, histo_mesure_pluie, consoHisto, consoActuel, chauffage, scenario;
+                                String histo_date_time, histo_temp_int, un = "1", zero = "0",  diversInfoExt, diversInfoInt;
+                                String histo_hum_int, histo_vent_valeur, histo_direction_vent, histo_mesure_pluie, consoHisto, consoActuel, chauffage, scenario1, scenario2, scenario3;
 
                                 //date d'actualisation selon le format ci-dessous
                                 DateFormat df = new SimpleDateFormat("EEE, d MMM yyyy  HH:mm");
                                 String date = df.format(Calendar.getInstance().getTime());
+                                dateView.setText(date);
                                 //récupération des éléments de l'array JSON
-                                String histo_bun_id = response.getString("histo_bun_id");
                                 //histo_date_time = response.getString("histo_date_time");
-                                histo_temp_ext = response.getString("histo_temp_ext");
-                                //
-                                histo_temp_int = response.getString("histo_temp_int");
-                                histo_hum_int = response.getString("histo_hum_int");
+
+                                //température et humidité extérieure
+                                String histo_temp_ext = response.getString("val_temp_ext");
+                                String histo_hum_ext = response.getString("val_hum_ext");
+                                histo_temp_ext += "°c\n" + histo_hum_ext + "%";
+                                tempExtView.setText(histo_temp_ext);
+
+                                //température et humidité intérieure
+                                histo_temp_int = response.getString("val_temp_int");
+                                histo_hum_int = response.getString("val_hum_int");
                                 histo_temp_int += "°c\n" + histo_hum_int + "%";
-                                //
-                                histo_mesure_pluie = response.getString("histo_mesure_pluie");
-                                //histo_direction_vent = response.getString("histo_direction_vent");
-                                //
-                                histo_vent_valeur = response.getString("histo_vent_valeur");
-                                //
-                                String histo_uv = response.getString("histo_uv");
-                                //mise en page des éléments si nécessaire
-                                //
-                                histo_temp_ext += "°c ";
-                                //
-                                //diversInfoExt = "";
-                                //diversInfoExt += "Pluie : " + histo_mesure_pluie + " mm \n" + "UV : " + histo_uv + "\n";
-                                //diversInfoExt += "Vent : " + histo_vent_valeur + "\n";
-                                //
+                                tempIntView.setText(histo_temp_int);
+
+                                //numéro du bungalow
+                                String histo_bun_id = response.getString("bun_id");
                                 diversInfoInt = "";
                                 diversInfoInt += "Vous êtes dans le bungalow numéro " + histo_bun_id + "\n\n";
-                                //
-                                consoHisto = "";
-                                consoHisto += "" + date;
-                                //
+                                diversIntView.setText(diversInfoInt);
+
+                                //anénomètre
+                                histo_mesure_pluie = response.getString("val_pluie");
+                                histo_mesure_pluie += "mm";
+                                pluieTextView.setText(histo_mesure_pluie);
+
+                                //consommation éléctrique
                                 String histo_conso_elect = "Actuel \n";
-                                histo_conso_elect += response.getString("histo_conso_elect");
+                                histo_conso_elect += response.getString("val_conso_3");
                                 histo_conso_elect += " W";
-                                //
+                                consoActuelView.setText(histo_conso_elect);
+
+                                //Valeur UV
+                                //String histo_uv = response.getString("val_uv");
+
+                                // girouette
+
+                                // histo_direction_vent = response.getString("histo_direction_vent");
+
+                                //histo_vent_valeur = response.getString("val_vent_vitesse");
+
                                 //on modifie la valeur 1 en allumée et zéro en éteinte, afin de pouvoir faire des comparaisons entre chaînes de caractères par la suite
-                                histo_etat_act_1 = response.getString("histo_etat_act_1");
-                                if (histo_etat_act_1.equals(un)) {
-                                    histo_etat_act_1 = "allumée";
-                                } else if (histo_etat_act_1.equals(zero)) {
-                                    histo_etat_act_1 = "éteinte";
+                                //etat de l'actionneur 1
+                                histo_etat_act_1 = response.getString("val_conso_1");
+                                if (histo_etat_act_1.equals(zero)) {
+                                    //histo_etat_act_1 = "éteinte";
+                                    lampeIntImageView.setImageResource(R.drawable.lampe_int_off1);
+                                } else {
+                                    //histo_etat_act_1 = "allumée";
+                                    lampeIntImageView.setImageResource(R.drawable.lampe_int_on1);
                                 }
-                                histo_etat_act_2 = response.getString("histo_etat_act_2");
-                                if(histo_etat_act_2.equals(un)) {
-                                    histo_etat_act_2 = "allumée";
+                                //état de l'actionneur 2
+                                histo_etat_act_2 = response.getString("val_conso_2");
+                                if(histo_etat_act_2.equals(zero)) {
+                                    chauffageIntImageView.setImageResource(R.drawable.lampe_int_off1);
                                 }
-                                else if(histo_etat_act_2.equals(zero)) {
-                                    histo_etat_act_2 = "éteinte";
-                                }
-                                //
-                                histo_etat_act_3 = response.getString("histo_etat_act_3");
-                                if(histo_etat_act_3.equals(un)) {
-                                    histo_etat_act_3 = "allumée";
-                                }
-                                else if(histo_etat_act_3.equals(zero)) {
-                                    histo_etat_act_3 = "éteinte";
+                                else {
+                                    chauffageIntImageView.setImageResource(R.drawable.lampe_int_on1);
                                 }
 
-                                //déclenchement de l'affichage
-                                tempExtView.setText(histo_temp_ext);
-                                diversInfoIntView.setText(diversInfoInt);
-                                dateView.setText(date);
-                                tempIntView.setText(histo_temp_int);
-                                consoActuelView.setText(histo_conso_elect);
-                                uvTextView.setText(histo_uv);
+                                //les scénarii
+                                //scénario 1
+								scenario1 = response.getString("scenario1");
+                                if (scenario1.equals(zero)) {
+                                    //histo_etat_act_1 = "éteinte";
+                                    lampeIntImageView.setImageResource(R.drawable.lampe_int_off1);
+                                } else {
+                                    //histo_etat_act_1 = "allumée";
+                                    lampeIntImageView.setImageResource(R.drawable.lampe_int_on1);
+                                }
+                                //scénario 2
+                                scenario2 = response.getString("scenario2");
+                                if (scenario2.equals(zero)) {
+                                    //histo_etat_act_1 = "éteinte";
+                                    lampeIntImageView.setImageResource(R.drawable.lampe_int_off1);
+                                } else {
+                                    //histo_etat_act_1 = "allumée";
+                                    lampeIntImageView.setImageResource(R.drawable.lampe_int_on1);
+                                }
+
+                                // Toast.makeText(MainActivity.this, "test", Toast.LENGTH_LONG).show();
+
+								//scenario2 = response.getString("scenario2");
+								//scenario3 = response.getString("scenario3");
+
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
@@ -286,14 +318,16 @@ public class MainActivity extends AppCompatActivity {
                     });
             requestQueue.add(jsonObjectRequest);
             //relance de la méthode dans le mainActivity toutes les 10 secondes ou 10000ms
+
             MainActivity.this.mHandler.postDelayed(m_Runnable, 10000);
         }
 
     };
     //Runnable auto-Refresh et récupération des données
-    private final Runnable m_Action = new Runnable() {
+   /* private final Runnable m_Action = new Runnable() {
         @Override
         public void run() {
+			//rafraîchissement des images
             String allumee ="allumée";
             if(histo_etat_act_1.equals(allumee))
             {
@@ -302,7 +336,6 @@ public class MainActivity extends AppCompatActivity {
             else {
                 lampeIntImageView.setImageResource(R.drawable.lampe_int_off1);
             }
-
             if(histo_etat_act_2.equals(allumee))
             {
                 lampeExtImageView.setImageResource(R.drawable.lampe_int_on1);
@@ -310,7 +343,6 @@ public class MainActivity extends AppCompatActivity {
             else {
                 lampeExtImageView.setImageResource(R.drawable.lampe_int_off1);
             }
-
             if(histo_etat_act_3.equals(allumee))
             {
                 chauffageIntImageView.setImageResource(R.drawable.lampe_int_on1);
@@ -318,10 +350,13 @@ public class MainActivity extends AppCompatActivity {
             else {
                 chauffageIntImageView.setImageResource(R.drawable.lampe_int_off1);
             }
+			//rafraîchissement des scénarios
+			
+			
             //boucle toutes les secondes
-            MainActivity.this.mHandler.postDelayed(m_Action,1000);
+            MainActivity.this.mHandler.postDelayed(m_Action,10000);
         }
-    };
+    };*/
 
 }
 

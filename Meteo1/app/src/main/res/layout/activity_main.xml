@@ -18,11 +18,11 @@
         >
 
         <LinearLayout
-            android:layout_marginTop="20dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
             android:layout_width="match_parent"
             android:layout_height="150dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="20dp"
             android:background="@drawable/effects">
 
             <ImageView
@@ -62,55 +62,56 @@
             android:layout_marginRight="20dp"
             android:layout_marginTop="20dp"
             android:background="@drawable/effects"
-            android:textColor="@color/colorBackground"
             android:gravity="center"
             android:text="DATE HEURES"
+            android:textColor="@color/colorBackground"
 
-            android:textSize="25dp"
-            />
+            android:textSize="25dp" />
 
         />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="100dp"
+            android:layout_marginBottom="20dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp"
             android:background="@drawable/effects"
             android:orientation="horizontal">
 
 
-<LinearLayout
-    android:layout_width="75dp"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:layout_marginLeft="10dp">
-            <ImageView
-                android:id="@+id/uvImageView"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="0dp"
-                android:layout_gravity="center"
-                android:background="@drawable/uv_medium"
-                />
-    <TextView
-        android:id="@+id/uvTextView"
-        android:layout_width="match_parent"
-        android:layout_height="20dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="5dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
-        android:gravity="center"
-        android:text="Fort"
-        android:textColor="@color/colorBackground"
-        android:textSize="15dp" />
-</LinearLayout>
+            <LinearLayout
+                android:layout_width="75dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/uvImageView"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="0dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/uv_medium" />
+
+                <TextView
+                    android:id="@+id/uvTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="20dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center"
+                    android:text="Fort"
+                    android:textColor="@color/colorBackground"
+                    android:textSize="15dp" />
+            </LinearLayout>
+
             <LinearLayout
                 android:layout_width="75dp"
                 android:layout_height="match_parent"
@@ -131,41 +132,42 @@
                     android:id="@+id/ventTextView"
                     android:layout_width="match_parent"
                     android:layout_height="20dp"
+                    android:layout_marginBottom="10dp"
                     android:layout_marginLeft="0dp"
                     android:layout_marginRight="5dp"
                     android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
                     android:gravity="center"
                     android:text="Moyen"
                     android:textColor="@color/colorBackground"
-                    android:textSize="15dp"
-                    />
+                    android:textSize="15dp" />
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="75dp"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
+
                 <ImageView
                     android:id="@+id/pluieImageView"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="0dp"
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="10dp"
                     android:layout_marginTop="10dp"
-                    android:layout_marginBottom="0dp"
-                    android:layout_gravity="center"
-                    android:background="@drawable/pluie"
-                    />
+                    android:background="@drawable/pluie" />
+
                 <TextView
                     android:id="@+id/pluieTextView"
                     android:layout_width="match_parent"
                     android:layout_height="20dp"
+                    android:layout_marginBottom="10dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="5dp"
                     android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
                     android:gravity="center"
-                    android:text="500mm"
+                    android:text="0mm"
                     android:textColor="@color/colorBackground"
                     android:textSize="15dp" />
             </LinearLayout>
@@ -174,123 +176,184 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
+            android:layout_marginBottom="20dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp"
             android:background="@drawable/effects"
             android:orientation="horizontal"
             android:weightSum="1">
+
             <TextView
                 android:id="@+id/lampeIntView"
                 android:layout_width="110dp"
                 android:layout_height="50dp"
+                android:layout_marginBottom="10dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:layout_gravity="center"
-                android:text="Eclairage du salon"
+                android:layout_marginTop="0dp"
+                android:gravity="center"
+                android:text="Eclairage"
                 android:textColor="@color/colorBackground"
-                android:textSize="20dp" />
+                android:textSize="20dp" /> />
+
             <ImageView
                 android:id="@+id/lampeIntImageView"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="10dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:layout_gravity="center"
                 android:background="@drawable/lampe_int_on1" />
 
-</LinearLayout>
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
+            android:layout_marginBottom="20dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp"
             android:background="@drawable/effects"
             android:orientation="horizontal"
             android:weightSum="1">
 
             <TextView
-                android:id="@+id/lampeExtView"
+                android:id="@+id/chauffageIntView"
                 android:layout_width="110dp"
                 android:layout_height="50dp"
-                android:layout_gravity="center"
                 android:layout_marginBottom="10dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
-                android:layout_marginTop="10dp"
-                android:text="Eclairage extérieur"
+                android:layout_marginTop="0dp"
+                android:gravity="center"
+                android:text="Chauffage"
                 android:textColor="@color/colorBackground"
                 android:textSize="20dp" />
 
             <ImageView
-                android:id="@+id/lampeExtImageView"
+                android:id="@+id/chauffageIntImageView"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="10dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:layout_gravity="center"
                 android:background="@drawable/lampe_int_off1" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
+            android:layout_marginBottom="20dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp"
             android:background="@drawable/effects"
             android:orientation="horizontal"
             android:weightSum="1">
+
             <TextView
-                android:id="@+id/chauffageIntView"
+                android:id="@+id/scenarioView1"
                 android:layout_width="110dp"
                 android:layout_height="50dp"
+                android:layout_marginBottom="10dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:layout_marginTop="0dp"
-                android:layout_marginBottom="10dp"
                 android:gravity="center"
-                android:text="Chauffage"
+                android:text="Scenario1"
                 android:textColor="@color/colorBackground"
                 android:textSize="20dp" />
+
             <ImageView
-                android:id="@+id/chauffageIntImageView"
+                android:id="@+id/scenarioImageView1"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="10dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:layout_gravity="center"
                 android:background="@drawable/chauffage_off1" />
         </LinearLayout>
 
-        <TextView
-            android:background="@drawable/effects"
-            android:id="@+id/scenarioView"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginBottom="20dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:layout_marginTop="20dp"
-            android:gravity="center"
-            android:text="Scénario"
-            android:textColor="@color/colorBackground"
-            android:textSize="20dp"
+            android:background="@drawable/effects"
+            android:orientation="horizontal"
+            android:weightSum="1">
 
-            />
+            <TextView
+                android:id="@+id/scenarioView2"
+                android:layout_width="110dp"
+                android:layout_height="50dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="0dp"
+                android:gravity="center"
+                android:text="Scenario2"
+                android:textColor="@color/colorBackground"
+                android:textSize="20dp" />
+
+            <ImageView
+                android:id="@+id/scenarioImageView2"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/chauffage_off1" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/effects"
+            android:orientation="horizontal"
+            android:weightSum="1">
+
+            <TextView
+                android:id="@+id/scenarioView3"
+                android:layout_width="110dp"
+                android:layout_height="50dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="0dp"
+                android:gravity="center"
+                android:text="Scenario3"
+                android:textColor="@color/colorBackground"
+                android:textSize="20dp" />
+
+            <ImageView
+                android:id="@+id/scenarioImageView3"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/chauffage_off1" />
+        </LinearLayout>
+
     </LinearLayout>
 
 
@@ -425,39 +488,6 @@
             android:weightSum="1">
 
             <Button
-                android:id="@+id/lampeExtOnButton"
-                android:layout_width="50dp"
-                android:layout_height="40dp"
-                android:layout_marginBottom="20dp"
-                android:layout_marginLeft="50dp"
-                android:layout_marginRight="20dp"
-                android:layout_marginTop="5dp"
-                android:text="ON" />
-
-            <Button
-                android:id="@+id/lampeExtOffButton"
-                android:layout_width="50dp"
-                android:layout_height="40dp"
-                android:layout_marginBottom="20dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:layout_marginTop="5dp"
-                android:text="OFF" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginBottom="20dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/effects"
-            android:orientation="horizontal"
-            android:weightSum="1">
-
-            <Button
                 android:id="@+id/chauffageOnButton"
                 android:layout_width="50dp"
                 android:layout_height="40dp"
@@ -491,7 +521,7 @@
             android:weightSum="1">
 
             <Button
-                android:id="@+id/scenarioOnButton"
+                android:id="@+id/scenarioOnButton1"
                 android:layout_width="50dp"
                 android:layout_height="40dp"
                 android:layout_marginBottom="20dp"
@@ -501,7 +531,7 @@
                 android:text="ON" />
 
             <Button
-                android:id="@+id/scenarioOffButton"
+                android:id="@+id/scenarioOffButton1"
                 android:layout_width="50dp"
                 android:layout_height="40dp"
                 android:layout_marginBottom="20dp"
@@ -512,6 +542,70 @@
 
         </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/effects"
+            android:orientation="horizontal"
+            android:weightSum="1">
 
+            <Button
+                android:id="@+id/scenarioOnButton2"
+                android:layout_width="50dp"
+                android:layout_height="40dp"
+                android:layout_marginBottom="20dp"
+                android:layout_marginLeft="50dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="5dp"
+                android:text="ON" />
+
+            <Button
+                android:id="@+id/scenarioOffButton2"
+                android:layout_width="50dp"
+                android:layout_height="40dp"
+                android:layout_marginBottom="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="5dp"
+                android:text="OFF" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/effects"
+            android:orientation="horizontal"
+            android:weightSum="1">
+
+            <Button
+                android:id="@+id/scenarioOnButton3"
+                android:layout_width="50dp"
+                android:layout_height="40dp"
+                android:layout_marginBottom="20dp"
+                android:layout_marginLeft="50dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="5dp"
+                android:text="ON" />
+
+            <Button
+                android:id="@+id/scenarioOffButton3"
+                android:layout_width="50dp"
+                android:layout_height="40dp"
+                android:layout_marginBottom="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="5dp"
+                android:text="OFF" />
+
+        </LinearLayout>
     </LinearLayout>
 </LinearLayout>
