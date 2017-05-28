@@ -1,5 +1,6 @@
 package com.example.bjj.meteo1;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
@@ -13,11 +14,13 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -37,6 +40,8 @@ import java.net.UnknownHostException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -44,18 +49,22 @@ public class MainActivity extends AppCompatActivity {
     Button start;
     //l'endroit où sont affichées les données
     TextView dateView, tempExtView, tempIntView, lampeIntView, lampeExtView, diversIntView, diversInfoIntView, consoHistoView, consoActuelView, chauffageView, scenarioView, uvTextView;
-    TextView ventTextView, pluieTextView;
+    TextView ventTextView, pluieTextView,scenarioView1,scenarioView2;
     ImageView lampeIntImageView, lampeExtImageView, chauffageIntImageView, scenarioImageView1, scenarioImageView2, scenarioImageView3;
-    Button lampeIntOnButton, lampeIntOffButton, lampeExtOnButton, lampeExtOffButton,chauffageOnButton,chauffageOffButton, scenarioOnButton1, scenarioOffButton1,scenarioOnButton2,scenarioOffButton2,scenarioOnButton3,scenarioOffButton3;
+    Button lampeIntOnButton, lampeIntOffButton, lampeExtOnButton, lampeExtOffButton,chauffageOnButton,chauffageOffButton, scenarioOnButton1, scenarioOffButton1,scenarioOnButton2,scenarioOffButton2;
     //la requête pour récupérer l'objet JSON
     RequestQueue requestQueue;
     //l'url de la vrai bdd
-    String url = "http://172.30.0.230/rest/api.php/Bungalow/14";
+    //String url = "http://172.30.0.230/rest/api.php/Bungalow/14";
+    //String url_post = "http://172.30.0.230/scenario.php";
+    static String num_scenario="",action="";
+
 	//String url_scenario = "http://172.30.0.230/rest/api.php/bungalow/13
     //l'url en local pour test
-    //String url = "http://192.168.1.81/rest/api.php/bungalow/13";
+    String url = "http://192.168.1.81/rest/api.php/Bungalow/14";
+    String url_post = "http://192.168.1.81/scenario.php";
     //String url = "http://192.168.42.240/rest/api.php/bungalow/13";
-    static String allumee = "allumée",histo_etat_act_1="", histo_etat_act_2="", histo_etat_act_3="";
+    static String allumee = "allumée",histo_etat_act_1="", histo_etat_act_2="";
     private String jsonResponse;
     //pour récupérer les données de la bdd
     //
@@ -75,6 +84,7 @@ public class MainActivity extends AppCompatActivity {
     //
     //Switch lampeSwitch1;
     //ImageButton imgButton;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,6 +108,8 @@ public class MainActivity extends AppCompatActivity {
         scenarioView = (TextView) findViewById(R.id.scenarioView);
         dateView = (TextView) findViewById(R.id.dateView);
         uvTextView = (TextView) findViewById(R.id.uvTextView);
+        scenarioView1 = (TextView) findViewById(R.id.scenarioView1);
+        scenarioView2 = (TextView) findViewById(R.id.scenarioView2);
 
         //les boutons on et off
         lampeIntOnButton = (Button) findViewById(R.id.lampeIntOnButton);
@@ -110,8 +122,7 @@ public class MainActivity extends AppCompatActivity {
         scenarioOffButton1 = (Button) findViewById(R.id.scenarioOffButton1);
         scenarioOnButton2 = (Button) findViewById(R.id.scenarioOnButton2);
         scenarioOffButton2 = (Button) findViewById(R.id.scenarioOffButton2);
-        scenarioOnButton3 = (Button) findViewById(R.id.scenarioOnButton3);
-        scenarioOffButton3 = (Button) findViewById(R.id.scenarioOffButton3);
+
 
         //initialiser les vues Images avec leur identifiants XML
         lampeIntImageView = (ImageView) findViewById(R.id.lampeIntImageView);
@@ -119,7 +130,7 @@ public class MainActivity extends AppCompatActivity {
         chauffageIntImageView = (ImageView) findViewById(R.id.chauffageIntImageView);
         scenarioImageView1 = (ImageView) findViewById(R.id.scenarioImageView1);
         scenarioImageView2 = (ImageView) findViewById(R.id.scenarioImageView2);
-        scenarioImageView3 = (ImageView) findViewById(R.id.scenarioImageView3);
+
         //les méthodes pour les actionneurs
         lampeIntOnButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -142,7 +153,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Toast.makeText(MainActivity.this, "Allumage du chauffage en cours", Toast.LENGTH_LONG).show();
-                ONOFF="1$3$1";
+                ONOFF="1$2$1";
                 new Thread(new ClientThread()).start();
             }
         });
@@ -150,7 +161,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Toast.makeText(MainActivity.this, "Extinction du chauffage en cours", Toast.LENGTH_LONG).show();
-                ONOFF="1$3$0";
+                ONOFF="1$2$0";
                 new Thread(new ClientThread()).start();
             }
         });
@@ -158,19 +169,39 @@ public class MainActivity extends AppCompatActivity {
         scenarioOnButton1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(MainActivity.this, "Allumage de l'éclairage extérieur en cours", Toast.LENGTH_LONG).show();
-                ONOFF="1$2$1";
-                new Thread(new ClientThread()).start();
+                Toast.makeText(MainActivity.this, "Chauffage automatique activé", Toast.LENGTH_LONG).show();
+                num_scenario="scenario_1";action="1";
+                scenario();
+
             }
         });
         scenarioOffButton1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(MainActivity.this, "Allumage de l'éclairage extérieur en cours", Toast.LENGTH_LONG).show();
-                ONOFF="1$2$1";
-                new Thread(new ClientThread()).start();
+                Toast.makeText(MainActivity.this, "Chauffage automatique désactivé", Toast.LENGTH_LONG).show();
+                num_scenario="scenario_1";action="0";
+                scenario();
             }
         });
+        //
+        scenarioOnButton2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(MainActivity.this, "Eclairage extérieur automatique activé", Toast.LENGTH_LONG).show();
+                num_scenario="scenario_2";action="1";
+                scenario();
+
+            }
+        });
+        scenarioOffButton2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(MainActivity.this, "Eclairage extérieur automatique désactivé", Toast.LENGTH_LONG).show();
+                num_scenario="scenario_2";action="0";
+                scenario();
+            }
+        });
+
         //request JSON
         requestQueue = Volley.newRequestQueue(this);
         //l'auto-refresh
@@ -201,6 +232,40 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
+
+    private void scenario(){
+
+        //Creating a string request
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url_post,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Log.d("Response", response);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // error
+                    }
+                }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String,String> params = new HashMap<>();
+                //Adding parameters to request
+                params.put("num_scenario", num_scenario);
+                params.put("action", action);
+
+                //returning parameter
+                return params;
+            }
+        };
+
+        //Adding the string request to the queue
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(stringRequest);
+    }
+
 
     //Runnable auto-Refresh et récupération des données
     private final Runnable m_Runnable = new Runnable() {
@@ -253,12 +318,10 @@ public class MainActivity extends AppCompatActivity {
 
                                 //Valeur UV
                                 //String histo_uv = response.getString("val_uv");
-
                                 // girouette
-
                                 // histo_direction_vent = response.getString("histo_direction_vent");
-
                                 //histo_vent_valeur = response.getString("val_vent_vitesse");
+
 
                                 //on modifie la valeur 1 en allumée et zéro en éteinte, afin de pouvoir faire des comparaisons entre chaînes de caractères par la suite
                                 //etat de l'actionneur 1
@@ -281,23 +344,40 @@ public class MainActivity extends AppCompatActivity {
 
                                 //les scénarii
                                 //scénario 1
-								scenario1 = response.getString("scenario1");
+								scenario1 = response.getString("scenario_1");
                                 if (scenario1.equals(zero)) {
                                     //histo_etat_act_1 = "éteinte";
-                                    lampeIntImageView.setImageResource(R.drawable.lampe_int_off1);
+                                    scenarioImageView1.setImageResource(R.drawable.rond_gris);
                                 } else {
                                     //histo_etat_act_1 = "allumée";
-                                    lampeIntImageView.setImageResource(R.drawable.lampe_int_on1);
+                                    scenarioImageView1.setImageResource(R.drawable.rond_vert);
                                 }
                                 //scénario 2
-                                scenario2 = response.getString("scenario2");
+                                scenario2 = response.getString("scenario_2");
                                 if (scenario2.equals(zero)) {
                                     //histo_etat_act_1 = "éteinte";
-                                    lampeIntImageView.setImageResource(R.drawable.lampe_int_off1);
+                                    scenarioImageView2.setImageResource(R.drawable.rond_gris);
                                 } else {
                                     //histo_etat_act_1 = "allumée";
-                                    lampeIntImageView.setImageResource(R.drawable.lampe_int_on1);
+                                    scenarioImageView2.setImageResource(R.drawable.rond_vert);
                                 }
+
+                                //Détails des scénarii
+                                //Scénario 1
+                                String scenario_text1 = "Chauffage automatique déclenchée en dessous de ";
+                                scenario_text1 += response.getString("temp_chauffage_off");
+                                scenario_text1 += "°C";
+                                scenarioView1.setText(scenario_text1);
+
+                                String scenario_text2 = "Eclairage extérieur auto, durée : ";
+                                scenario_text2 += response.getString("duree_allumage_lampe");
+                                scenario_text2 += " min";
+                                scenarioView1.setText(scenario_text2);
+
+
+                                //Scénario 2
+
+
 
                                 // Toast.makeText(MainActivity.this, "test", Toast.LENGTH_LONG).show();
 
@@ -323,6 +403,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
     };
+
     //Runnable auto-Refresh et récupération des données
    /* private final Runnable m_Action = new Runnable() {
         @Override

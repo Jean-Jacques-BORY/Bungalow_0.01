@@ -175,8 +175,8 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginBottom="20dp"
+            android:layout_height="60dp"
+            android:layout_marginBottom="0dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:layout_marginTop="20dp"
@@ -186,8 +186,8 @@
 
             <TextView
                 android:id="@+id/lampeIntView"
-                android:layout_width="110dp"
-                android:layout_height="50dp"
+                android:layout_width="130dp"
+                android:layout_height="60dp"
                 android:layout_marginBottom="10dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
@@ -212,8 +212,8 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginBottom="20dp"
+            android:layout_height="60dp"
+            android:layout_marginBottom="0dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:layout_marginTop="20dp"
@@ -223,8 +223,8 @@
 
             <TextView
                 android:id="@+id/chauffageIntView"
-                android:layout_width="110dp"
-                android:layout_height="50dp"
+                android:layout_width="130dp"
+                android:layout_height="60dp"
                 android:layout_marginBottom="10dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
@@ -248,8 +248,8 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginBottom="20dp"
+            android:layout_height="60dp"
+            android:layout_marginBottom="0dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:layout_marginTop="20dp"
@@ -259,16 +259,16 @@
 
             <TextView
                 android:id="@+id/scenarioView1"
-                android:layout_width="110dp"
-                android:layout_height="50dp"
+                android:layout_width="160dp"
+                android:layout_height="60dp"
                 android:layout_marginBottom="10dp"
-                android:layout_marginLeft="20dp"
+                android:layout_marginLeft="10dp"
                 android:layout_marginRight="20dp"
                 android:layout_marginTop="0dp"
                 android:gravity="center"
-                android:text="Scenario1"
+                android:text="Chauffage automatique"
                 android:textColor="@color/colorBackground"
-                android:textSize="20dp" />
+                android:textSize="15dp" />
 
             <ImageView
                 android:id="@+id/scenarioImageView1"
@@ -276,16 +276,16 @@
                 android:layout_height="40dp"
                 android:layout_gravity="center"
                 android:layout_marginBottom="10dp"
-                android:layout_marginLeft="20dp"
+                android:layout_marginLeft="0dp"
                 android:layout_marginRight="20dp"
                 android:layout_marginTop="10dp"
-                android:background="@drawable/chauffage_off1" />
+                android:background="@drawable/rond_gris" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginBottom="20dp"
+            android:layout_height="60dp"
+            android:layout_marginBottom="0dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:layout_marginTop="20dp"
@@ -295,16 +295,17 @@
 
             <TextView
                 android:id="@+id/scenarioView2"
-                android:layout_width="110dp"
-                android:layout_height="50dp"
+                android:layout_width="160dp"
+                android:layout_height="60dp"
                 android:layout_marginBottom="10dp"
-                android:layout_marginLeft="20dp"
+                android:layout_marginLeft="10dp"
                 android:layout_marginRight="20dp"
                 android:layout_marginTop="0dp"
                 android:gravity="center"
-                android:text="Scenario2"
+                android:text="Eclairage extérieur automatique"
                 android:textColor="@color/colorBackground"
-                android:textSize="20dp" />
+                android:textSize="15dp"
+                 />
 
             <ImageView
                 android:id="@+id/scenarioImageView2"
@@ -312,47 +313,13 @@
                 android:layout_height="40dp"
                 android:layout_gravity="center"
                 android:layout_marginBottom="10dp"
-                android:layout_marginLeft="20dp"
+                android:layout_marginLeft="0dp"
                 android:layout_marginRight="20dp"
                 android:layout_marginTop="10dp"
-                android:background="@drawable/chauffage_off1" />
+                android:background="@drawable/rond_gris" />
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginBottom="20dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/effects"
-            android:orientation="horizontal"
-            android:weightSum="1">
 
-            <TextView
-                android:id="@+id/scenarioView3"
-                android:layout_width="110dp"
-                android:layout_height="50dp"
-                android:layout_marginBottom="10dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:layout_marginTop="0dp"
-                android:gravity="center"
-                android:text="Scenario3"
-                android:textColor="@color/colorBackground"
-                android:textSize="20dp" />
-
-            <ImageView
-                android:id="@+id/scenarioImageView3"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_gravity="center"
-                android:layout_marginBottom="10dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/chauffage_off1" />
-        </LinearLayout>
 
     </LinearLayout>
 
@@ -419,16 +386,17 @@
     android:layout_marginLeft="20dp"
     android:layout_marginRight="20dp"
     android:layout_marginTop="20dp">
-        <TextView
-            android:layout_marginLeft="10dp"
-            android:id="@+id/consohistoTextView"
-            android:layout_width="100dp"
-            android:layout_height="match_parent"
-            android:background="@drawable/effects"
-            android:gravity="center"
-            android:text="Conso moyenne de la journée"
-            android:textColor="@color/colorBackground"
-            android:textSize="20dp" />
+
+    <TextView
+        android:id="@+id/consohistoTextView"
+        android:layout_width="100dp"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="10dp"
+        android:background="@drawable/effects"
+        android:gravity="center"
+        android:text="Conso de la journée"
+        android:textColor="@color/colorBackground"
+        android:textSize="20dp" />
 
     <TextView
         android:id="@+id/consoActuelView"
@@ -445,8 +413,8 @@
 </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginBottom="20dp"
+            android:layout_height="60dp"
+            android:layout_marginBottom="0dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:layout_marginTop="20dp"
@@ -461,7 +429,7 @@
                 android:layout_marginBottom="20dp"
                 android:layout_marginLeft="50dp"
                 android:layout_marginRight="20dp"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="10dp"
                 android:text="ON" />
 
             <Button
@@ -471,15 +439,15 @@
                 android:layout_marginBottom="20dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="10dp"
                 android:text="OFF" />
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginBottom="20dp"
+            android:layout_height="60dp"
+            android:layout_marginBottom="0dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:layout_marginTop="20dp"
@@ -494,7 +462,7 @@
                 android:layout_marginBottom="20dp"
                 android:layout_marginLeft="50dp"
                 android:layout_marginRight="20dp"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="10dp"
                 android:text="ON" />
 
             <Button
@@ -504,15 +472,15 @@
                 android:layout_marginBottom="20dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="10dp"
                 android:text="OFF" />
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginBottom="20dp"
+            android:layout_height="60dp"
+            android:layout_marginBottom="0dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:layout_marginTop="20dp"
@@ -527,7 +495,7 @@
                 android:layout_marginBottom="20dp"
                 android:layout_marginLeft="50dp"
                 android:layout_marginRight="20dp"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="10dp"
                 android:text="ON" />
 
             <Button
@@ -537,15 +505,15 @@
                 android:layout_marginBottom="20dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="10dp"
                 android:text="OFF" />
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginBottom="20dp"
+            android:layout_height="60dp"
+            android:layout_marginBottom="0dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:layout_marginTop="20dp"
@@ -560,7 +528,7 @@
                 android:layout_marginBottom="20dp"
                 android:layout_marginLeft="50dp"
                 android:layout_marginRight="20dp"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="10dp"
                 android:text="ON" />
 
             <Button
@@ -570,40 +538,7 @@
                 android:layout_marginBottom="20dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
-                android:layout_marginTop="5dp"
-                android:text="OFF" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginBottom="20dp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/effects"
-            android:orientation="horizontal"
-            android:weightSum="1">
-
-            <Button
-                android:id="@+id/scenarioOnButton3"
-                android:layout_width="50dp"
-                android:layout_height="40dp"
-                android:layout_marginBottom="20dp"
-                android:layout_marginLeft="50dp"
-                android:layout_marginRight="20dp"
-                android:layout_marginTop="5dp"
-                android:text="ON" />
-
-            <Button
-                android:id="@+id/scenarioOffButton3"
-                android:layout_width="50dp"
-                android:layout_height="40dp"
-                android:layout_marginBottom="20dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="10dp"
                 android:text="OFF" />
 
         </LinearLayout>

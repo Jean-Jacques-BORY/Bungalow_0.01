@@ -14,7 +14,7 @@ $key = array_shift($request)+0;
 // create SQL based on HTTP method
 switch ($method) {
   case 'GET':
-	$sql = "select * from scenario,bungalow WHERE bungalow.bun_id=$key AND scenario.scenario_bun_id=$key"; break;
+    $sql = "select * from `$table` WHERE histo_id=(select MAX(histo_id)) AND `histo_bun_id`=$key ORDER BY DESC LIMIT 1"; break;
 }
 
 // excecute SQL statement
