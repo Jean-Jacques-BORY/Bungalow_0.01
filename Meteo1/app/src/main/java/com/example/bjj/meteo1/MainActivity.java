@@ -50,19 +50,20 @@ public class MainActivity extends AppCompatActivity {
     //l'endroit où sont affichées les données
     TextView dateView, tempExtView, tempIntView, lampeIntView, lampeExtView, diversIntView, diversInfoIntView, consoHistoView, consoActuelView, chauffageView, scenarioView, uvTextView;
     TextView ventTextView, pluieTextView,scenarioView1,scenarioView2;
-    ImageView lampeIntImageView, lampeExtImageView, chauffageIntImageView, scenarioImageView1, scenarioImageView2, scenarioImageView3;
+    ImageView lampeIntImageView, lampeExtImageView, chauffageIntImageView, scenarioImageView1, scenarioImageView2;
     Button lampeIntOnButton, lampeIntOffButton, lampeExtOnButton, lampeExtOffButton,chauffageOnButton,chauffageOffButton, scenarioOnButton1, scenarioOffButton1,scenarioOnButton2,scenarioOffButton2;
     //la requête pour récupérer l'objet JSON
     RequestQueue requestQueue;
     //l'url de la vrai bdd
-    //String url = "http://172.30.0.230/rest/api.php/Bungalow/14";
-    //String url_post = "http://172.30.0.230/scenario.php";
+    String url = "http://172.30.0.230/rest/api.php/Bungalow/1";
+    String url_post = "http://172.30.0.230/rest/scenario.php";
+    //variables contenant le numéro du scénario et l'action à effectuer
     static String num_scenario="",action="";
 
 	//String url_scenario = "http://172.30.0.230/rest/api.php/bungalow/13
     //l'url en local pour test
-    String url = "http://192.168.1.81/rest/api.php/Bungalow/14";
-    String url_post = "http://192.168.1.81/scenario.php";
+    //String url = "http://192.168.1.81/rest/api.php/Bungalow/14";
+    //String url_post = "http://192.168.1.81/scenario.php";
     //String url = "http://192.168.42.240/rest/api.php/bungalow/13";
     static String allumee = "allumée",histo_etat_act_1="", histo_etat_act_2="";
     private String jsonResponse;
@@ -99,6 +100,7 @@ public class MainActivity extends AppCompatActivity {
         tempIntView = (TextView) findViewById(R.id.tempIntView);
         diversIntView = (TextView) findViewById(R.id.diversIntView);
         pluieTextView = (TextView) findViewById(R.id.pluieTextView);
+        ventTextView = (TextView) findViewById(R.id.ventTextView);
         /*diversInfoExtView = (TextView) findViewById(R.id.diversExtView);
         consoHistoView = (TextView) findViewById(R.id.consohistoView);*/
         consoActuelView = (TextView) findViewById(R.id.consoActuelView);
@@ -122,7 +124,6 @@ public class MainActivity extends AppCompatActivity {
         scenarioOffButton1 = (Button) findViewById(R.id.scenarioOffButton1);
         scenarioOnButton2 = (Button) findViewById(R.id.scenarioOnButton2);
         scenarioOffButton2 = (Button) findViewById(R.id.scenarioOffButton2);
-
 
         //initialiser les vues Images avec leur identifiants XML
         lampeIntImageView = (ImageView) findViewById(R.id.lampeIntImageView);
@@ -208,7 +209,6 @@ public class MainActivity extends AppCompatActivity {
         this.mHandler = new Handler();
         //activation de la méhthode Runnable, qui boucle toutes les 5 secondes
         m_Runnable.run();
-        //m_Action.run();
     }
 
     //classe pour envoyer les commandes aux actionneurs
@@ -277,8 +277,8 @@ public class MainActivity extends AppCompatActivity {
                         public void onResponse(JSONObject response) {
 
                             try {
-                                String histo_date_time, histo_temp_int, un = "1", zero = "0",  diversInfoExt, diversInfoInt;
-                                String histo_hum_int, histo_vent_valeur, histo_direction_vent, histo_mesure_pluie, consoHisto, consoActuel, chauffage, scenario1, scenario2, scenario3;
+                                String histo_date_time, histo_temp_int, un = "1", zero = "0",diversInfoInt;
+                                String histo_hum_int, histo_vent_valeur, histo_direction_vent, histo_mesure_pluie, consoHisto, consoActuel, chauffage, scenario1, scenario2;
 
                                 //date d'actualisation selon le format ci-dessous
                                 DateFormat df = new SimpleDateFormat("EEE, d MMM yyyy  HH:mm");
@@ -317,20 +317,21 @@ public class MainActivity extends AppCompatActivity {
                                 consoActuelView.setText(histo_conso_elect);
 
                                 //Valeur UV
-                                //String histo_uv = response.getString("val_uv");
-                                // girouette
-                                // histo_direction_vent = response.getString("histo_direction_vent");
-                                //histo_vent_valeur = response.getString("val_vent_vitesse");
+                                String val_uv = response.getString("val_uv");
+                                uvTextView.setText(val_uv);
 
+                                // girouette
+                                //histo_direction_vent = response.getString("histo_direction_vent");
+                                histo_vent_valeur = response.getString("val_vent_vitesse");
+                                histo_vent_valeur += " km/h";
+                                ventTextView.setText(histo_vent_valeur);
 
                                 //on modifie la valeur 1 en allumée et zéro en éteinte, afin de pouvoir faire des comparaisons entre chaînes de caractères par la suite
                                 //etat de l'actionneur 1
                                 histo_etat_act_1 = response.getString("val_conso_1");
                                 if (histo_etat_act_1.equals(zero)) {
-                                    //histo_etat_act_1 = "éteinte";
                                     lampeIntImageView.setImageResource(R.drawable.lampe_int_off1);
                                 } else {
-                                    //histo_etat_act_1 = "allumée";
                                     lampeIntImageView.setImageResource(R.drawable.lampe_int_on1);
                                 }
                                 //état de l'actionneur 2
@@ -341,49 +342,32 @@ public class MainActivity extends AppCompatActivity {
                                 else {
                                     chauffageIntImageView.setImageResource(R.drawable.lampe_int_on1);
                                 }
-
                                 //les scénarii
                                 //scénario 1
 								scenario1 = response.getString("scenario_1");
                                 if (scenario1.equals(zero)) {
-                                    //histo_etat_act_1 = "éteinte";
                                     scenarioImageView1.setImageResource(R.drawable.rond_gris);
                                 } else {
-                                    //histo_etat_act_1 = "allumée";
                                     scenarioImageView1.setImageResource(R.drawable.rond_vert);
                                 }
                                 //scénario 2
                                 scenario2 = response.getString("scenario_2");
                                 if (scenario2.equals(zero)) {
-                                    //histo_etat_act_1 = "éteinte";
                                     scenarioImageView2.setImageResource(R.drawable.rond_gris);
                                 } else {
-                                    //histo_etat_act_1 = "allumée";
                                     scenarioImageView2.setImageResource(R.drawable.rond_vert);
                                 }
-
                                 //Détails des scénarii
                                 //Scénario 1
-                                String scenario_text1 = "Chauffage automatique déclenchée en dessous de ";
+                                String scenario_text1 = "Chauffage auto en dessous de ";
                                 scenario_text1 += response.getString("temp_chauffage_off");
                                 scenario_text1 += "°C";
                                 scenarioView1.setText(scenario_text1);
-
+                                //Scénario 2
                                 String scenario_text2 = "Eclairage extérieur auto, durée : ";
                                 scenario_text2 += response.getString("duree_allumage_lampe");
                                 scenario_text2 += " min";
-                                scenarioView1.setText(scenario_text2);
-
-
-                                //Scénario 2
-
-
-
-                                // Toast.makeText(MainActivity.this, "test", Toast.LENGTH_LONG).show();
-
-								//scenario2 = response.getString("scenario2");
-								//scenario3 = response.getString("scenario3");
-
+                                scenarioView2.setText(scenario_text2);
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
@@ -403,41 +387,5 @@ public class MainActivity extends AppCompatActivity {
         }
 
     };
-
-    //Runnable auto-Refresh et récupération des données
-   /* private final Runnable m_Action = new Runnable() {
-        @Override
-        public void run() {
-			//rafraîchissement des images
-            String allumee ="allumée";
-            if(histo_etat_act_1.equals(allumee))
-            {
-                lampeIntImageView.setImageResource(R.drawable.lampe_int_on1);
-            }
-            else {
-                lampeIntImageView.setImageResource(R.drawable.lampe_int_off1);
-            }
-            if(histo_etat_act_2.equals(allumee))
-            {
-                lampeExtImageView.setImageResource(R.drawable.lampe_int_on1);
-            }
-            else {
-                lampeExtImageView.setImageResource(R.drawable.lampe_int_off1);
-            }
-            if(histo_etat_act_3.equals(allumee))
-            {
-                chauffageIntImageView.setImageResource(R.drawable.lampe_int_on1);
-            }
-            else {
-                chauffageIntImageView.setImageResource(R.drawable.lampe_int_off1);
-            }
-			//rafraîchissement des scénarios
-			
-			
-            //boucle toutes les secondes
-            MainActivity.this.mHandler.postDelayed(m_Action,10000);
-        }
-    };*/
-
 }
 

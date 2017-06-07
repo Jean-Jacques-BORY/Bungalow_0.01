@@ -107,7 +107,7 @@
                     android:layout_marginRight="5dp"
                     android:layout_marginTop="10dp"
                     android:gravity="center"
-                    android:text="Fort"
+                    android:text="UV"
                     android:textColor="@color/colorBackground"
                     android:textSize="15dp" />
             </LinearLayout>
@@ -137,7 +137,7 @@
                     android:layout_marginRight="5dp"
                     android:layout_marginTop="10dp"
                     android:gravity="center"
-                    android:text="Moyen"
+                    android:text="Vent"
                     android:textColor="@color/colorBackground"
                     android:textSize="15dp" />
             </LinearLayout>
