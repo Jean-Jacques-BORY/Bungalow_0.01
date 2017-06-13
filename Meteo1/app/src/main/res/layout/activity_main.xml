@@ -26,15 +26,13 @@
             android:background="@drawable/effects">
 
             <ImageView
-
+                android:id="@+id/imageView"
                 android:layout_width="120dp"
                 android:layout_height="90dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
                 android:layout_marginTop="20dp"
-                android:background="@drawable/ciel"
-
-                />
+                android:background="@drawable/exterieur1" />
 
             <TextView
 
@@ -163,11 +161,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="20dp"
                     android:layout_marginBottom="10dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="5dp"
+                    android:layout_marginLeft="0dp"
+                    android:layout_marginRight="0dp"
                     android:layout_marginTop="10dp"
                     android:gravity="center"
-                    android:text="0mm"
+                    android:text="000mm/h"
                     android:textColor="@color/colorBackground"
                     android:textSize="15dp" />
             </LinearLayout>
@@ -248,7 +246,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="80dp"
             android:layout_marginBottom="0dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
@@ -260,15 +258,15 @@
             <TextView
                 android:id="@+id/scenarioView1"
                 android:layout_width="160dp"
-                android:layout_height="60dp"
-                android:layout_marginBottom="10dp"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="0dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="20dp"
                 android:layout_marginTop="0dp"
                 android:gravity="center"
                 android:text="Chauffage automatique"
                 android:textColor="@color/colorBackground"
-                android:textSize="15dp" />
+                android:textSize="12dp" />
 
             <ImageView
                 android:id="@+id/scenarioImageView1"
@@ -343,8 +341,8 @@
             <ImageView
                 android:layout_width="120dp"
                 android:layout_height="90dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
                 android:layout_marginTop="20dp"
                 android:background="@drawable/interieur" />
 
@@ -388,24 +386,25 @@
     android:layout_marginTop="20dp">
 
     <TextView
-        android:id="@+id/consohistoTextView"
+        android:id="@+id/consoActuelView"
+
         android:layout_width="100dp"
         android:layout_height="match_parent"
         android:layout_marginLeft="10dp"
         android:background="@drawable/effects"
         android:gravity="center"
-        android:text="Conso de la journée"
+        android:text="Conso en temps réel"
         android:textColor="@color/colorBackground"
         android:textSize="20dp" />
 
     <TextView
-        android:id="@+id/consoActuelView"
+        android:id="@+id/consohistoTextView"
         android:layout_marginLeft="30dp"
         android:layout_width="100dp"
         android:layout_height="match_parent"
         android:background="@drawable/effects"
         android:gravity="center"
-        android:text="Conso en temps réel"
+        android:text="prix de l'heure"
         android:textColor="@color/colorBackground"
         android:textSize="20dp" />
 
@@ -479,7 +478,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="80dp"
             android:layout_marginBottom="0dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
@@ -492,10 +491,10 @@
                 android:id="@+id/scenarioOnButton1"
                 android:layout_width="50dp"
                 android:layout_height="40dp"
-                android:layout_marginBottom="20dp"
+                android:layout_marginBottom="10dp"
                 android:layout_marginLeft="50dp"
                 android:layout_marginRight="20dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="20dp"
                 android:text="ON" />
 
             <Button
@@ -505,7 +504,7 @@
                 android:layout_marginBottom="20dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="20dp"
                 android:text="OFF" />
 
         </LinearLayout>

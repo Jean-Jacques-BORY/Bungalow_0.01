@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
     //le bouton pour envoyer la commande d'activation
     Button start;
     //l'endroit où sont affichées les données
-    TextView dateView, tempExtView, tempIntView, lampeIntView, lampeExtView, diversIntView, diversInfoIntView, consoHistoView, consoActuelView, chauffageView, scenarioView, uvTextView;
+    TextView dateView, tempExtView, tempIntView, lampeIntView, lampeExtView, diversIntView, diversInfoIntView, consohistoTextView, consoActuelView, chauffageView, scenarioView, uvTextView;
     TextView ventTextView, pluieTextView,scenarioView1,scenarioView2;
     ImageView lampeIntImageView, lampeExtImageView, chauffageIntImageView, scenarioImageView1, scenarioImageView2;
     Button lampeIntOnButton, lampeIntOffButton, lampeExtOnButton, lampeExtOffButton,chauffageOnButton,chauffageOffButton, scenarioOnButton1, scenarioOffButton1,scenarioOnButton2,scenarioOffButton2;
@@ -101,8 +101,8 @@ public class MainActivity extends AppCompatActivity {
         diversIntView = (TextView) findViewById(R.id.diversIntView);
         pluieTextView = (TextView) findViewById(R.id.pluieTextView);
         ventTextView = (TextView) findViewById(R.id.ventTextView);
-        /*diversInfoExtView = (TextView) findViewById(R.id.diversExtView);
-        consoHistoView = (TextView) findViewById(R.id.consohistoView);*/
+        /*diversInfoExtView = (TextView) findViewById(R.id.diversExtView);*/
+        consohistoTextView = (TextView) findViewById(R.id.consohistoTextView);
         consoActuelView = (TextView) findViewById(R.id.consoActuelView);
         lampeIntView = (TextView) findViewById(R.id.lampeIntView);
         lampeExtView = (TextView) findViewById(R.id.lampeExtView);
@@ -307,14 +307,20 @@ public class MainActivity extends AppCompatActivity {
 
                                 //anénomètre
                                 histo_mesure_pluie = response.getString("val_pluie");
-                                histo_mesure_pluie += "mm";
+                                histo_mesure_pluie += "mm/h";
                                 pluieTextView.setText(histo_mesure_pluie);
 
                                 //consommation éléctrique
-                                String histo_conso_elect = "Actuel \n";
-                                histo_conso_elect += response.getString("val_conso_3");
-                                histo_conso_elect += " W";
+                                String conso_elect = response.getString("val_conso_3");
+                                float conso = Float.valueOf(conso_elect);
+                                conso = conso * 230;
+                                String histo_conso_elect = String.format("Actuel\n %.0f W",conso);
                                 consoActuelView.setText(histo_conso_elect);
+
+                                //prix au kilowatt/heure
+                                float consommation = (((float)conso/1000) * (float)0.145);
+                                String prix_consommation = String.format("%.2f \n euros/h",consommation);
+                                consohistoTextView.setText(prix_consommation);
 
                                 //Valeur UV
                                 String val_uv = response.getString("val_uv");
@@ -359,10 +365,14 @@ public class MainActivity extends AppCompatActivity {
                                 }
                                 //Détails des scénarii
                                 //Scénario 1
-                                String scenario_text1 = "Chauffage auto en dessous de ";
+                                String scenario_text1 = "Chauffage auto jusqu'à ";
                                 scenario_text1 += response.getString("temp_chauffage_off");
+                                scenario_text1 += "°C \n";
+                                scenario_text1 += "Chauffage auto en dessous de ";
+                                scenario_text1 += response.getString("temp_chauffage_on");
                                 scenario_text1 += "°C";
                                 scenarioView1.setText(scenario_text1);
+
                                 //Scénario 2
                                 String scenario_text2 = "Eclairage extérieur auto, durée : ";
                                 scenario_text2 += response.getString("duree_allumage_lampe");
